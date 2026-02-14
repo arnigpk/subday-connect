@@ -2,6 +2,7 @@ import { FooterData } from '@/lib/types';
 import { Mail, Phone, MapPin } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { fadeUp, staggerContainer } from '@/lib/animations';
+import logoSubday from '@/assets/logo-subday.png';
 
 interface Props {
   data: FooterData;
@@ -19,7 +20,7 @@ export function FooterSection({ data }: Props) {
       <div className="container mx-auto">
         <motion.div className="grid md:grid-cols-3 gap-8" variants={fadeUp} transition={{ duration: 0.6 }}>
           <div>
-            <div className="text-lg font-extrabold mb-4">subday</div>
+            <img src={logoSubday} alt="subday" className="h-8 mb-4" />
             <div className="flex items-center gap-2 text-sm text-muted-foreground mb-2">
               <MapPin size={14} />
               {data.city}
