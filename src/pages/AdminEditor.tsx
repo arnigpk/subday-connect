@@ -89,7 +89,8 @@ function EditorContent() {
   const addSection = (type: SectionType) => {
     const id = `${type}_${Date.now()}`;
     const maxOrder = Math.max(0, ...currentContent.sections.map((s) => s.order));
-    const defaultData = getDefaultContent(lang).sections.find((s) => s.type === type)?.data || {};
+    const defaultData = getDefaultContent(lang).sections.find((s) => s.type === type)?.data;
+    if (!defaultData) return;
     updateContent((prev) => ({
       ...prev,
       sections: [...prev.sections, { id, type, order: maxOrder + 1, data: defaultData }],
@@ -124,7 +125,7 @@ function EditorContent() {
   const publish = async () => {
     // Validate required fields
     const hero = currentContent.sections.find((s) => s.type === 'hero');
-    if (!hero || !(hero.data as Record<string, string>).title) {
+    if (!hero || !(hero.data as unknown as Record<string, string>).title) {
       toast.error('Заполните заголовок Hero для публикации');
       return;
     }

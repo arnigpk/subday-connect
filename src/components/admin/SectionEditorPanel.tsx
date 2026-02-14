@@ -57,7 +57,7 @@ function ListEditor({
 }
 
 export function SectionEditorPanel({ section, onChange }: Props) {
-  const d = section.data as Record<string, unknown>;
+  const d = section.data as unknown as Record<string, unknown>;
 
   switch (section.type) {
     case 'hero': {
