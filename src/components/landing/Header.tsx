@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
+import logoSubday from '@/assets/logo-subday.png';
 import { Menu, X } from 'lucide-react';
 
 const navLinks = [
@@ -17,8 +18,8 @@ export function Header() {
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-xl border-b border-border/50">
       <div className="container mx-auto h-16 flex items-center justify-between">
-        <a href="#" className="text-xl font-extrabold tracking-tight">
-          subday
+        <a href="#" className="flex items-center">
+          <img src={logoSubday} alt="subday" className="h-8" />
         </a>
 
         <nav className="hidden md:flex items-center gap-8">
