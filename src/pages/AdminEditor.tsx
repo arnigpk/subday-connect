@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 import { useContent } from '@/hooks/useContent';
 import { useLanguage } from '@/contexts/LanguageContext';
@@ -54,6 +54,18 @@ function EditorContent() {
   const [activeId, setActiveId] = useState<string | null>(null);
   const [saving, setSaving] = useState(false);
   const [publishing, setPublishing] = useState(false);
+
+  // Reset local edits when language changes or fresh data loads
+  useEffect(() => {
+    setContent(null);
+    setActiveId(null);
+  }, [lang]);
+
+  useEffect(() => {
+    if (loadedContent && !content) {
+      // Content loaded from DB, no local edits yet — use it directly
+    }
+  }, [loadedContent]);
 
   const currentContent = content || loadedContent || getDefaultContent(lang);
   const sections = [...currentContent.sections].sort((a, b) => a.order - b.order);
