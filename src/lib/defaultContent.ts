@@ -126,7 +126,7 @@ const contentKz: SiteContent = {
     {
       id: 'hero', type: 'hero', order: 0,
       data: {
-        title: 'subday — сүйікті\nсусындарға жазылым',
+        title: 'subday - specialty coffee &\nHoReCa',
         subtitle: 'Бір жазылым — қалаңыздағы үздік мекемелерде кофе мен сусындар. Күн сайын үнемдеңіз.',
         app_store_url: 'https://apps.apple.com/app/idXXXXXXXXX',
         google_play_url: 'https://play.google.com/store/apps/details?id=XXXXXXXXX'
