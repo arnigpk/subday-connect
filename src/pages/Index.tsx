@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { useContent } from '@/hooks/useContent';
 import { Header } from '@/components/landing/Header';
 import { HeroSection } from '@/components/landing/HeroSection';
@@ -10,6 +10,7 @@ import { FaqSection } from '@/components/landing/FaqSection';
 import { CtaSection } from '@/components/landing/CtaSection';
 import { FooterSection } from '@/components/landing/FooterSection';
 import { PartnerModal } from '@/components/landing/PartnerModal';
+import { Preloader } from '@/components/landing/Preloader';
 import {
   HeroData, StepsData, UsersData, PartnersData,
   TrustData, FaqData, CtaData, FooterData, Section
@@ -42,6 +43,7 @@ function renderSection(section: Section, onPartnerClick: () => void) {
 export default function Index() {
   const { data: content, isLoading } = useContent('published');
   const [modalOpen, setModalOpen] = useState(false);
+  const [showPreloader, setShowPreloader] = useState(true);
 
   const sections = useMemo(() => {
     if (!content?.sections) return [];
@@ -67,12 +69,15 @@ export default function Index() {
       }
     : null;
 
-  if (isLoading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-muted-foreground">Загрузка...</div>
-      </div>
-    );
+  useEffect(() => {
+    if (!isLoading) {
+      const timer = setTimeout(() => setShowPreloader(false), 1800);
+      return () => clearTimeout(timer);
+    }
+  }, [isLoading]);
+
+  if (isLoading || showPreloader) {
+    return <Preloader show={true} />;
   }
 
   return (
