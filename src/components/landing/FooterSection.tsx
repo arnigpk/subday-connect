@@ -1,5 +1,7 @@
 import { FooterData } from '@/lib/types';
 import { Mail, Phone, MapPin } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { fadeUp, staggerContainer } from '@/lib/animations';
 
 interface Props {
   data: FooterData;
@@ -7,9 +9,15 @@ interface Props {
 
 export function FooterSection({ data }: Props) {
   return (
-    <footer className="border-t border-border py-12">
+    <motion.footer
+      className="border-t border-border py-12"
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.2 }}
+      variants={staggerContainer}
+    >
       <div className="container mx-auto">
-        <div className="grid md:grid-cols-3 gap-8">
+        <motion.div className="grid md:grid-cols-3 gap-8" variants={fadeUp} transition={{ duration: 0.6 }}>
           <div>
             <div className="text-lg font-extrabold mb-4">subday</div>
             <div className="flex items-center gap-2 text-sm text-muted-foreground mb-2">
@@ -45,8 +53,8 @@ export function FooterSection({ data }: Props) {
           <div className="text-sm text-muted-foreground md:text-right">
             © {new Date().getFullYear()} subday. All rights reserved.
           </div>
-        </div>
+        </motion.div>
       </div>
-    </footer>
+    </motion.footer>
   );
 }

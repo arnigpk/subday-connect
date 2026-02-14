@@ -1,6 +1,8 @@
 import { HeroData } from '@/lib/types';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { Apple, Play } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { fadeUp, staggerContainer } from '@/lib/animations';
 
 interface Props {
   data: HeroData;
@@ -11,16 +13,33 @@ export function HeroSection({ data, onPartnerClick }: Props) {
   const { lang } = useLanguage();
 
   return (
-    <section className="pt-32 pb-20 md:pt-40 md:pb-32">
-      <div className="container mx-auto text-center">
-        <h1 className="heading-xl max-w-3xl mx-auto whitespace-pre-line mb-6">
+    <section className="pt-32 pb-20 md:pt-40 md:pb-32 overflow-hidden">
+      <motion.div
+        className="container mx-auto text-center"
+        initial="hidden"
+        animate="visible"
+        variants={staggerContainer}
+      >
+        <motion.h1
+          className="heading-xl max-w-3xl mx-auto whitespace-pre-line mb-6"
+          variants={fadeUp}
+          transition={{ duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] }}
+        >
           {data.title}
-        </h1>
-        <p className="text-body text-muted-foreground max-w-xl mx-auto mb-10">
+        </motion.h1>
+        <motion.p
+          className="text-body text-muted-foreground max-w-xl mx-auto mb-10"
+          variants={fadeUp}
+          transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
+        >
           {data.subtitle}
-        </p>
+        </motion.p>
 
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
+        <motion.div
+          className="flex flex-col sm:flex-row items-center justify-center gap-3"
+          variants={fadeUp}
+          transition={{ duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] }}
+        >
           <a
             href={data.app_store_url}
             target="_blank"
@@ -42,8 +61,8 @@ export function HeroSection({ data, onPartnerClick }: Props) {
           <button onClick={onPartnerClick} className="btn-gold w-full sm:w-auto">
             {lang === 'ru' ? 'Оставить заявку' : 'Өтінім қалдыру'}
           </button>
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
     </section>
   );
 }
