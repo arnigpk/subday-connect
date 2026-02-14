@@ -1,8 +1,9 @@
 import { HeroData } from '@/lib/types';
 import { useLanguage } from '@/contexts/LanguageContext';
-import { Apple, Play } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { fadeUp, staggerContainer } from '@/lib/animations';
+import appStoreLogo from '@/assets/app-store.png';
+import googlePlayLogo from '@/assets/google-play.png';
 
 interface Props {
   data: HeroData;
@@ -46,7 +47,7 @@ export function HeroSection({ data, onPartnerClick }: Props) {
             rel="noopener noreferrer"
             className="btn-dark gap-2 w-full sm:w-auto"
           >
-            <Apple size={18} />
+            <img src={appStoreLogo} alt="App Store" className="h-5 w-5 object-contain" />
             App Store
           </a>
           <a
@@ -55,7 +56,7 @@ export function HeroSection({ data, onPartnerClick }: Props) {
             rel="noopener noreferrer"
             className="btn-dark gap-2 w-full sm:w-auto"
           >
-            <Play size={18} />
+            <img src={googlePlayLogo} alt="Google Play" className="h-5 w-5 object-contain" />
             Google Play
           </a>
           <button onClick={onPartnerClick} className="btn-gold w-full sm:w-auto">
