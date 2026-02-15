@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
 import { Loader2 } from 'lucide-react';
@@ -8,7 +8,27 @@ export default function AdminLogin() {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [checking, setChecking] = useState(true);
   const navigate = useNavigate();
+
+  // Auto-redirect if already authenticated as admin
+  useEffect(() => {
+    supabase.auth.getSession().then(async ({ data: { session } }) => {
+      if (session?.user) {
+        const { data: roles } = await supabase
+          .from('user_roles')
+          .select('role')
+          .eq('user_id', session.user.id);
+        if (roles?.some((r: { role: string }) => r.role === 'admin')) {
+          navigate('/admin', { replace: true });
+          return;
+        }
+      }
+      setChecking(false);
+    });
+  }, [navigate]);
+
+  if (checking) return null;
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
