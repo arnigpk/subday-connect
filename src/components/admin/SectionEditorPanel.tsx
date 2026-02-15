@@ -1,5 +1,8 @@
+import { useState } from 'react';
 import { Section, HeroData, StepsData, UsersData, PartnersData, TrustData, FaqData, CtaData, FooterData } from '@/lib/types';
-import { Plus, Trash2 } from 'lucide-react';
+import { Plus, Trash2, Upload, Loader2 } from 'lucide-react';
+import { supabase } from '@/integrations/supabase/client';
+import { toast } from 'sonner';
 
 interface Props {
   section: Section;
@@ -21,10 +24,52 @@ function Field({ label, value, onChange, multiline, placeholder }: {
   );
 }
 
+function ImageUploadField({ label, value, onChange }: {
+  label: string; value: string; onChange: (v: string) => void;
+}) {
+  const [uploading, setUploading] = useState(false);
+
+  const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setUploading(true);
+    const ext = file.name.split('.').pop();
+    const name = `partner_${Date.now()}.${ext}`;
+    const { error } = await supabase.storage.from('media').upload(name, file);
+    if (error) {
+      toast.error(error.message);
+    } else {
+      const { data } = supabase.storage.from('media').getPublicUrl(name);
+      onChange(data.publicUrl);
+      toast.success('Загружено');
+    }
+    setUploading(false);
+    e.target.value = '';
+  };
+
+  return (
+    <div className="space-y-1">
+      <label className="text-xs font-medium text-muted-foreground">{label}</label>
+      <div className="flex gap-2 items-center">
+        <input value={value} onChange={(e) => onChange(e.target.value)} className="input-field text-sm flex-1" placeholder="URL или загрузите файл" />
+        <label className="shrink-0 cursor-pointer p-2 rounded-lg border border-border hover:bg-accent transition-colors">
+          {uploading ? <Loader2 size={14} className="animate-spin" /> : <Upload size={14} />}
+          <input type="file" accept="image/*" onChange={handleUpload} className="hidden" />
+        </label>
+      </div>
+      {value && (
+        <div className="mt-1 w-12 h-12 rounded-lg border border-border overflow-hidden bg-accent/30">
+          <img src={value} alt="" className="w-full h-full object-contain" />
+        </div>
+      )}
+    </div>
+  );
+}
+
 function ListEditor({
   items, fields, onUpdate, onCreate, label
 }: {
-  items: Record<string, string>[]; fields: { key: string; label: string; multiline?: boolean }[];
+  items: Record<string, string>[]; fields: { key: string; label: string; multiline?: boolean; type?: 'image' }[];
   onUpdate: (items: Record<string, string>[]) => void; onCreate: () => void; label: string;
 }) {
   const remove = (i: number) => onUpdate(items.filter((_, idx) => idx !== i));
@@ -48,7 +93,11 @@ function ListEditor({
             <Trash2 size={14} />
           </button>
           {fields.map((f) => (
-            <Field key={f.key} label={f.label} value={String(item[f.key] || '')} onChange={(v) => update(i, f.key, v)} multiline={f.multiline} />
+            f.type === 'image' ? (
+              <ImageUploadField key={f.key} label={f.label} value={String(item[f.key] || '')} onChange={(v) => update(i, f.key, v)} />
+            ) : (
+              <Field key={f.key} label={f.label} value={String(item[f.key] || '')} onChange={(v) => update(i, f.key, v)} multiline={f.multiline} />
+            )
           ))}
         </div>
       ))}
@@ -151,7 +200,7 @@ export function SectionEditorPanel({ section, onChange }: Props) {
           />
           <ListEditor
             items={data.logos as unknown as Record<string, string>[]}
-            fields={[{ key: 'url', label: 'URL изображения' }, { key: 'alt', label: 'Описание' }]}
+            fields={[{ key: 'url', label: 'URL изображения', type: 'image' as const }, { key: 'alt', label: 'Описание' }]}
             onUpdate={(logos) => onChange({ ...data, logos } as unknown as TrustData)}
             onCreate={() => onChange({ ...data, logos: [...data.logos, { url: '', alt: '' }] } as TrustData)}
             label="Логотипы"
@@ -159,7 +208,7 @@ export function SectionEditorPanel({ section, onChange }: Props) {
           <Field label="Заголовок партнёров" value={(data as TrustData).partner_logos_title || ''} onChange={(v) => onChange({ ...data, partner_logos_title: v } as TrustData)} />
           <ListEditor
             items={partnerLogos as unknown as Record<string, string>[]}
-            fields={[{ key: 'url', label: 'URL логотипа' }, { key: 'name', label: 'Название' }]}
+            fields={[{ key: 'url', label: 'Логотип', type: 'image' as const }, { key: 'name', label: 'Название' }]}
             onUpdate={(partner_logos) => onChange({ ...data, partner_logos } as unknown as TrustData)}
             onCreate={() => onChange({ ...data, partner_logos: [...partnerLogos, { url: '', name: '' }] } as TrustData)}
             label="Логотипы партнёров"

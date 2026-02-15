@@ -1,10 +1,11 @@
 import { TrustData } from '@/lib/types';
-import { Quote, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Quote } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { fadeUp, fadeIn, scaleIn, staggerContainer } from '@/lib/animations';
 import {
   Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext
 } from '@/components/ui/carousel';
+import Autoplay from 'embla-carousel-autoplay';
 
 interface Props {
   data: TrustData;
@@ -13,6 +14,14 @@ interface Props {
 export function TrustSection({ data }: Props) {
   const partnerLogos = data.partner_logos || [];
   const partnerLogosTitle = data.partner_logos_title || 'Наши партнёры';
+
+  const reviewsAutoplay = data.reviews.length > 2
+    ? [Autoplay({ delay: 3000, stopOnInteraction: true, stopOnMouseEnter: true })]
+    : [];
+
+  const logosAutoplay = partnerLogos.length > 4
+    ? [Autoplay({ delay: 3000, stopOnInteraction: true, stopOnMouseEnter: true })]
+    : [];
 
   return (
     <section id="trust" className="section-padding overflow-hidden">
@@ -81,7 +90,7 @@ export function TrustSection({ data }: Props) {
             variants={fadeUp}
             transition={{ duration: 0.6 }}
           >
-            <Carousel opts={{ align: 'start', loop: true }} className="w-full">
+            <Carousel opts={{ align: 'start', loop: true }} plugins={reviewsAutoplay} className="w-full">
               <CarouselContent className="-ml-4">
                 {data.reviews.map((review, i) => (
                   <CarouselItem key={i} className="pl-4 md:basis-1/2">
@@ -116,27 +125,45 @@ export function TrustSection({ data }: Props) {
             transition={{ duration: 0.6 }}
           >
             <h3 className="text-xl md:text-2xl font-bold text-center mb-8">{partnerLogosTitle}</h3>
-            <div className="flex flex-wrap items-center justify-center gap-8 md:gap-12">
-              {partnerLogos.map((logo, i) => (
-                <motion.div
-                  key={i}
-                  className="flex flex-col items-center gap-2"
-                  variants={scaleIn}
-                  transition={{ duration: 0.4, delay: i * 0.05 }}
-                >
-                  <div className="w-20 h-20 md:w-24 md:h-24 rounded-2xl bg-accent/50 border border-border flex items-center justify-center overflow-hidden p-3">
-                    <img
-                      src={logo.url}
-                      alt={logo.name}
-                      className="max-w-full max-h-full object-contain"
-                    />
-                  </div>
-                  {logo.name && (
-                    <span className="text-xs text-muted-foreground text-center max-w-[6rem] truncate">{logo.name}</span>
-                  )}
-                </motion.div>
-              ))}
-            </div>
+
+            {partnerLogos.length > 4 ? (
+              <Carousel opts={{ align: 'start', loop: true }} plugins={logosAutoplay} className="w-full max-w-4xl mx-auto">
+                <CarouselContent className="-ml-4">
+                  {partnerLogos.map((logo, i) => (
+                    <CarouselItem key={i} className="pl-4 basis-1/3 md:basis-1/5">
+                      <div className="flex flex-col items-center gap-2">
+                        <div className="w-20 h-20 md:w-24 md:h-24 rounded-2xl bg-accent/50 border border-border flex items-center justify-center overflow-hidden p-3">
+                          <img src={logo.url} alt={logo.name} className="max-w-full max-h-full object-contain" />
+                        </div>
+                        {logo.name && (
+                          <span className="text-xs text-muted-foreground text-center max-w-[6rem] truncate">{logo.name}</span>
+                        )}
+                      </div>
+                    </CarouselItem>
+                  ))}
+                </CarouselContent>
+                <CarouselPrevious className="-left-4 md:-left-12" />
+                <CarouselNext className="-right-4 md:-right-12" />
+              </Carousel>
+            ) : (
+              <div className="flex flex-wrap items-center justify-center gap-8 md:gap-12">
+                {partnerLogos.map((logo, i) => (
+                  <motion.div
+                    key={i}
+                    className="flex flex-col items-center gap-2"
+                    variants={scaleIn}
+                    transition={{ duration: 0.4, delay: i * 0.05 }}
+                  >
+                    <div className="w-20 h-20 md:w-24 md:h-24 rounded-2xl bg-accent/50 border border-border flex items-center justify-center overflow-hidden p-3">
+                      <img src={logo.url} alt={logo.name} className="max-w-full max-h-full object-contain" />
+                    </div>
+                    {logo.name && (
+                      <span className="text-xs text-muted-foreground text-center max-w-[6rem] truncate">{logo.name}</span>
+                    )}
+                  </motion.div>
+                ))}
+              </div>
+            )}
           </motion.div>
         )}
       </div>
