@@ -79,55 +79,36 @@ export function HeroSection({ data, onPartnerClick }: Props) {
           alt="subday app"
           className="absolute inset-0 w-full h-full object-cover"
         />
-        <div className="absolute inset-0 z-10 flex flex-col justify-end p-8 md:p-12 lg:p-16 bg-gradient-to-t from-black/60 via-black/20 to-transparent">
+        <div className="absolute inset-0 z-10 flex flex-col justify-end p-8 md:p-12 lg:p-16 bg-gradient-to-t from-black/40 to-transparent">
           <motion.div
-            className="max-w-2xl"
+            className="flex flex-wrap items-center gap-3"
             initial="hidden"
             animate="visible"
             variants={staggerContainer}
           >
-            <motion.h1
-              className="heading-xl text-white whitespace-pre-line mb-4"
+            <motion.a
+              href={data.app_store_url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-dark gap-2 text-sm justify-center"
               variants={fadeUp}
-              transition={{ duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] }}
             >
-              {data.title}
-            </motion.h1>
-            <motion.p
-              className="text-body text-white/80 max-w-xl mb-8"
+              <img src={appStoreLogo} alt="App Store" className="h-5 w-5 object-contain" />
+              App Store
+            </motion.a>
+            <motion.a
+              href={data.google_play_url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-dark gap-2 text-sm justify-center"
               variants={fadeUp}
-              transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
             >
-              {data.subtitle}
-            </motion.p>
-
-            <motion.div
-              className="flex flex-wrap items-center gap-3"
-              variants={fadeUp}
-              transition={{ duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] }}
-            >
-              <a
-                href={data.app_store_url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn-dark gap-2 text-sm justify-center"
-              >
-                <img src={appStoreLogo} alt="App Store" className="h-5 w-5 object-contain" />
-                App Store
-              </a>
-              <a
-                href={data.google_play_url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn-dark gap-2 text-sm justify-center"
-              >
-                <img src={googlePlayLogo} alt="Google Play" className="h-5 w-5 object-contain" />
-                Google Play
-              </a>
-              <button onClick={onPartnerClick} className="btn-gold">
-                {lang === 'ru' ? 'Стать партнёром' : 'Серіктес болу'}
-              </button>
-            </motion.div>
+              <img src={googlePlayLogo} alt="Google Play" className="h-5 w-5 object-contain" />
+              Google Play
+            </motion.a>
+            <motion.button onClick={onPartnerClick} className="btn-gold" variants={fadeUp}>
+              {lang === 'ru' ? 'Стать партнёром' : 'Серіктес болу'}
+            </motion.button>
           </motion.div>
         </div>
       </div>
