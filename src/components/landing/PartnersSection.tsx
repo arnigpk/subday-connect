@@ -57,8 +57,8 @@ export function PartnersSection({ data, onPartnerClick }: Props) {
         </motion.div>
 
         {/* Steps */}
-        <motion.h3
-          className="heading-md text-center mb-10"
+        <motion.h2
+          className="heading-lg text-center mb-16"
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.5 }}
@@ -66,9 +66,9 @@ export function PartnersSection({ data, onPartnerClick }: Props) {
           transition={{ duration: 0.6 }}
         >
           {lang === 'ru' ? 'Как подключиться' : 'Қалай қосылу'}
-        </motion.h3>
+        </motion.h2>
         <motion.div
-          className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-4xl mx-auto mb-10"
+          className="grid md:grid-cols-3 lg:grid-cols-4 gap-8 max-w-4xl mx-auto mb-10"
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.2 }}
@@ -82,14 +82,14 @@ export function PartnersSection({ data, onPartnerClick }: Props) {
               transition={{ duration: 0.5 }}
             >
               <motion.div
-                className="step-number mx-auto mb-4"
+                className="step-number mx-auto mb-5"
                 whileHover={{ scale: 1.15, rotate: 5 }}
                 transition={{ type: 'spring', stiffness: 300 }}
               >
                 {i + 1}
               </motion.div>
-              <h4 className="font-semibold mb-1">{step.title}</h4>
-              <p className="text-sm text-muted-foreground">{step.description}</p>
+              <h3 className="font-bold text-lg mb-2">{step.title}</h3>
+              <p className="text-body-sm text-muted-foreground">{step.description}</p>
             </motion.div>
           ))}
         </motion.div>
