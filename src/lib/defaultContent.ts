@@ -117,7 +117,8 @@ const contentRu: SiteContent = {
         email: 'hello@subday.kz',
         phone: '+7 (7xx) xxx-xx-xx',
         links: [
-          { label: 'Публичная оферта', url: '#offer' }
+          { label: 'Публичная оферта', url: '#offer' },
+          { label: 'Политика конфиденциальности', url: '#privacy' }
         ]
       }
     }
@@ -241,7 +242,8 @@ const contentKz: SiteContent = {
         email: 'hello@subday.kz',
         phone: '+7 (7xx) xxx-xx-xx',
         links: [
-          { label: 'Публичная оферта', url: '#offer' }
+          { label: 'Публичная оферта', url: '#offer' },
+          { label: 'Құпиялылық саясаты', url: '#privacy' }
         ]
       }
     }
