@@ -79,34 +79,34 @@ export function HeroSection({ data, onPartnerClick }: Props) {
           alt="subday app"
           className="absolute inset-0 w-full h-full object-cover"
         />
-        <div className="absolute inset-0 z-10 flex flex-col justify-end p-8 md:p-12 lg:p-16 bg-gradient-to-t from-black/40 to-transparent">
+        <div className="absolute inset-0 z-10 flex items-end p-8 md:p-12 lg:p-16" style={{ paddingBottom: '18%' }}>
           <motion.div
-            className="flex flex-wrap items-center gap-3"
+            className="flex flex-col gap-3"
             initial="hidden"
             animate="visible"
             variants={staggerContainer}
           >
-            <motion.a
-              href={data.app_store_url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn-dark gap-2 text-sm justify-center"
-              variants={fadeUp}
-            >
-              <img src={appStoreLogo} alt="App Store" className="h-5 w-5 object-contain" />
-              App Store
-            </motion.a>
-            <motion.a
-              href={data.google_play_url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn-dark gap-2 text-sm justify-center"
-              variants={fadeUp}
-            >
-              <img src={googlePlayLogo} alt="Google Play" className="h-5 w-5 object-contain" />
-              Google Play
-            </motion.a>
-            <motion.button onClick={onPartnerClick} className="btn-gold" variants={fadeUp}>
+            <motion.div className="flex items-center gap-3" variants={fadeUp}>
+              <a
+                href={data.app_store_url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-dark gap-2 text-sm justify-center"
+              >
+                <img src={appStoreLogo} alt="App Store" className="h-5 w-5 object-contain" />
+                App Store
+              </a>
+              <a
+                href={data.google_play_url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-dark gap-2 text-sm justify-center"
+              >
+                <img src={googlePlayLogo} alt="Google Play" className="h-5 w-5 object-contain" />
+                Google Play
+              </a>
+            </motion.div>
+            <motion.button onClick={onPartnerClick} className="btn-gold w-fit" variants={fadeUp}>
               {lang === 'ru' ? 'Стать партнёром' : 'Серіктес болу'}
             </motion.button>
           </motion.div>
