@@ -29,61 +29,111 @@ export function PartnersSection({ data, onPartnerClick }: Props) {
           {data.title}
         </motion.h2>
 
-        {/* Advantages */}
-        <motion.div
-          className="grid sm:grid-cols-2 gap-6 max-w-3xl mx-auto mb-20"
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.2 }}
-          variants={staggerContainer}
-        >
-          {data.advantages.map((adv, i) => {
-            const Icon = advantageIcons[i % advantageIcons.length];
-            return (
-              <motion.div
-                key={i}
-                className="card-elevated transition-shadow duration-300"
-                variants={scaleIn}
-                transition={{ duration: 0.5 }}
-                whileHover={{ y: -6, transition: { duration: 0.2 } }}
-              >
-                <div className="w-9 h-9 rounded-lg flex items-center justify-center mb-4" style={{ background: 'hsl(var(--gold-light))' }}>
-                  <Icon size={16} style={{ color: 'hsl(var(--gold-dark))' }} />
-                </div>
-                <h3 className="font-bold mb-1">{adv.title}</h3>
-                <p className="text-sm text-muted-foreground">{adv.description}</p>
-              </motion.div>
-            );
-          })}
-        </motion.div>
-
-        {/* Partner cabinet mockup */}
-        <motion.div
-          className="flex justify-center my-20"
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.3 }}
-          variants={scaleIn}
-          transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
-        >
+        {/* Desktop: advantages left + mockup right */}
+        <div className="hidden lg:flex items-center gap-12 max-w-6xl mx-auto mb-20">
           <motion.div
-            animate={{ y: [0, -12, 0] }}
-            transition={{ duration: 4, ease: 'easeInOut', repeat: Infinity }}
+            className="grid grid-cols-2 gap-5 flex-1"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.2 }}
+            variants={staggerContainer}
           >
-            <div className="relative mx-auto w-[260px] md:w-[300px]">
-              <div className="rounded-[2.5rem] border-[6px] border-foreground/90 bg-foreground/90 p-1.5 shadow-2xl">
-              <div className="overflow-hidden rounded-[2rem] bg-background">
-                  <img
-                    src={partnerCabinetMockup}
-                    alt="Кабинет партнёра subday"
-                    className="w-full h-auto object-contain block"
-                  />
-                </div>
-              </div>
-              <div className="absolute -inset-4 -z-10 rounded-[3rem] opacity-30 blur-2xl gold-gradient" />
-            </div>
+            {data.advantages.map((adv, i) => {
+              const Icon = advantageIcons[i % advantageIcons.length];
+              return (
+                <motion.div
+                  key={i}
+                  className="card-elevated transition-shadow duration-300"
+                  variants={scaleIn}
+                  transition={{ duration: 0.5 }}
+                  whileHover={{ y: -6, transition: { duration: 0.2 } }}
+                >
+                  <div className="w-9 h-9 rounded-lg flex items-center justify-center mb-4" style={{ background: 'hsl(var(--gold-light))' }}>
+                    <Icon size={16} style={{ color: 'hsl(var(--gold-dark))' }} />
+                  </div>
+                  <h3 className="font-bold mb-1">{adv.title}</h3>
+                  <p className="text-sm text-muted-foreground">{adv.description}</p>
+                </motion.div>
+              );
+            })}
           </motion.div>
-        </motion.div>
+
+          <motion.div
+            className="flex-shrink-0"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.3 }}
+            variants={scaleIn}
+            transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
+          >
+            <motion.div
+              animate={{ y: [0, -12, 0] }}
+              transition={{ duration: 4, ease: 'easeInOut', repeat: Infinity }}
+            >
+              <div className="relative mx-auto w-[260px]">
+                <div className="rounded-[2.5rem] border-[6px] border-foreground/90 bg-foreground/90 p-1.5 shadow-2xl">
+                  <div className="overflow-hidden rounded-[2rem] bg-background">
+                    <img src={partnerCabinetMockup} alt="Кабинет партнёра subday" className="w-full h-auto object-contain block" />
+                  </div>
+                </div>
+                <div className="absolute -inset-4 -z-10 rounded-[3rem] opacity-30 blur-2xl gold-gradient" />
+              </div>
+            </motion.div>
+          </motion.div>
+        </div>
+
+        {/* Mobile/Tablet: advantages grid + mockup below */}
+        <div className="lg:hidden">
+          <motion.div
+            className="grid sm:grid-cols-2 gap-6 max-w-3xl mx-auto mb-12"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.2 }}
+            variants={staggerContainer}
+          >
+            {data.advantages.map((adv, i) => {
+              const Icon = advantageIcons[i % advantageIcons.length];
+              return (
+                <motion.div
+                  key={i}
+                  className="card-elevated transition-shadow duration-300"
+                  variants={scaleIn}
+                  transition={{ duration: 0.5 }}
+                  whileHover={{ y: -6, transition: { duration: 0.2 } }}
+                >
+                  <div className="w-9 h-9 rounded-lg flex items-center justify-center mb-4" style={{ background: 'hsl(var(--gold-light))' }}>
+                    <Icon size={16} style={{ color: 'hsl(var(--gold-dark))' }} />
+                  </div>
+                  <h3 className="font-bold mb-1">{adv.title}</h3>
+                  <p className="text-sm text-muted-foreground">{adv.description}</p>
+                </motion.div>
+              );
+            })}
+          </motion.div>
+
+          <motion.div
+            className="flex justify-center mb-12"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.3 }}
+            variants={scaleIn}
+            transition={{ duration: 0.8 }}
+          >
+            <motion.div
+              animate={{ y: [0, -12, 0] }}
+              transition={{ duration: 4, ease: 'easeInOut', repeat: Infinity }}
+            >
+              <div className="relative mx-auto w-[260px] md:w-[300px]">
+                <div className="rounded-[2.5rem] border-[6px] border-foreground/90 bg-foreground/90 p-1.5 shadow-2xl">
+                  <div className="overflow-hidden rounded-[2rem] bg-background">
+                    <img src={partnerCabinetMockup} alt="Кабинет партнёра subday" className="w-full h-auto object-contain block" />
+                  </div>
+                </div>
+                <div className="absolute -inset-4 -z-10 rounded-[3rem] opacity-30 blur-2xl gold-gradient" />
+              </div>
+            </motion.div>
+          </motion.div>
+        </div>
 
         {/* Steps */}
         <motion.h2
