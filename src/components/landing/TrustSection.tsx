@@ -19,7 +19,7 @@ export function TrustSection({ data }: Props) {
     ? [Autoplay({ delay: 3000, stopOnInteraction: true, stopOnMouseEnter: true })]
     : [];
 
-  const logosAutoplay = partnerLogos.length > 4
+  const logosAutoplay = partnerLogos.length > 3
     ? [Autoplay({ delay: 3000, stopOnInteraction: true, stopOnMouseEnter: true })]
     : [];
 
@@ -126,11 +126,11 @@ export function TrustSection({ data }: Props) {
           >
             <h3 className="text-xl md:text-2xl font-bold text-center mb-8">{partnerLogosTitle}</h3>
 
-            {partnerLogos.length > 4 ? (
-              <Carousel opts={{ align: 'start', loop: true }} plugins={logosAutoplay} className="w-full max-w-4xl mx-auto">
+            {partnerLogos.length > 3 ? (
+              <Carousel opts={{ align: 'start', loop: true, slidesToScroll: 3 }} plugins={logosAutoplay} className="w-full max-w-4xl mx-auto">
                 <CarouselContent className="-ml-4">
                   {partnerLogos.map((logo, i) => (
-                    <CarouselItem key={i} className="pl-4 basis-1/3 md:basis-1/5">
+                    <CarouselItem key={i} className="pl-4 basis-1/3">
                       <div className="flex flex-col items-center gap-2">
                         <div className="w-20 h-20 md:w-24 md:h-24 rounded-2xl bg-accent/50 border border-border flex items-center justify-center overflow-hidden p-3">
                           <img src={logo.url} alt={logo.name} className="max-w-full max-h-full object-contain" />
@@ -146,7 +146,7 @@ export function TrustSection({ data }: Props) {
                 <CarouselNext className="-right-4 md:-right-12" />
               </Carousel>
             ) : (
-              <div className="flex flex-wrap items-center justify-center gap-8 md:gap-12">
+              <div className="grid grid-cols-3 gap-8 max-w-md mx-auto">
                 {partnerLogos.map((logo, i) => (
                   <motion.div
                     key={i}
