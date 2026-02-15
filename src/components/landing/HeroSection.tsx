@@ -79,7 +79,7 @@ export function HeroSection({ data, onPartnerClick }: Props) {
           alt="subday app"
           className="absolute inset-0 w-full h-full object-cover"
         />
-        <div className="absolute inset-0 z-10 flex items-end p-8 md:p-12 lg:p-16" style={{ paddingBottom: '18%' }}>
+        <div className="absolute inset-0 z-10 flex items-end p-8 md:p-12 lg:p-16" style={{ paddingBottom: '8%' }}>
           <motion.div
             className="flex flex-col gap-3"
             initial="hidden"
@@ -106,7 +106,7 @@ export function HeroSection({ data, onPartnerClick }: Props) {
                 Google Play
               </a>
             </motion.div>
-            <motion.button onClick={onPartnerClick} className="btn-gold w-fit" variants={fadeUp}>
+            <motion.button onClick={onPartnerClick} className="btn-gold w-full" variants={fadeUp}>
               {lang === 'ru' ? 'Стать партнёром' : 'Серіктес болу'}
             </motion.button>
           </motion.div>
