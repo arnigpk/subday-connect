@@ -10,7 +10,7 @@ interface Props {
 
 export function PartnerModal({ open, onClose }: Props) {
   const { lang } = useLanguage();
-  const [form, setForm] = useState({ name: '', city: '', phone: '', venue: '', comment: '' });
+  const [form, setForm] = useState({ name: '', phone: '', venue: '' });
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState('');
@@ -32,7 +32,7 @@ export function PartnerModal({ open, onClose }: Props) {
       if (response.error) throw new Error(response.error.message);
 
       setSuccess(true);
-      setForm({ name: '', city: '', phone: '', venue: '', comment: '' });
+      setForm({ name: '', phone: '', venue: '' });
     } catch (err: unknown) {
       setError(err instanceof Error ? err.message : 'Error');
     } finally {
@@ -80,15 +80,6 @@ export function PartnerModal({ open, onClose }: Props) {
               maxLength={100}
             />
             <input
-              type="text"
-              placeholder={t('Город', 'Қала')}
-              value={form.city}
-              onChange={(e) => setForm({ ...form, city: e.target.value })}
-              className="input-field"
-              required
-              maxLength={100}
-            />
-            <input
               type="tel"
               placeholder={t('Номер телефона', 'Телефон нөмірі')}
               value={form.phone}
@@ -105,14 +96,6 @@ export function PartnerModal({ open, onClose }: Props) {
               className="input-field"
               required
               maxLength={200}
-            />
-            <textarea
-              placeholder={t('Комментарий', 'Пікір')}
-              value={form.comment}
-              onChange={(e) => setForm({ ...form, comment: e.target.value })}
-              className="input-field resize-none"
-              rows={3}
-              maxLength={500}
             />
 
             {error && <p className="text-destructive text-sm">{error}</p>}
