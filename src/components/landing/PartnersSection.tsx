@@ -3,6 +3,7 @@ import { useLanguage } from '@/contexts/LanguageContext';
 import { TrendingUp, DollarSign, Users, BarChart3 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { fadeUp, scaleIn, staggerContainer } from '@/lib/animations';
+import partnerCabinetMockup from '@/assets/partner-cabinet-mockup.jpeg';
 
 const advantageIcons = [TrendingUp, DollarSign, Users, BarChart3];
 
@@ -54,6 +55,34 @@ export function PartnersSection({ data, onPartnerClick }: Props) {
               </motion.div>
             );
           })}
+        </motion.div>
+
+        {/* Partner cabinet mockup */}
+        <motion.div
+          className="flex justify-center my-20"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.3 }}
+          variants={scaleIn}
+          transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
+        >
+          <motion.div
+            animate={{ y: [0, -12, 0] }}
+            transition={{ duration: 4, ease: 'easeInOut', repeat: Infinity }}
+          >
+            <div className="relative mx-auto w-[260px] md:w-[300px]">
+              <div className="rounded-[2.5rem] border-[6px] border-foreground/90 bg-foreground/90 p-1.5 shadow-2xl">
+                <div className="overflow-hidden rounded-[2rem] bg-background">
+                  <img
+                    src={partnerCabinetMockup}
+                    alt="Кабинет партнёра subday"
+                    className="w-full h-auto block"
+                  />
+                </div>
+              </div>
+              <div className="absolute -inset-4 -z-10 rounded-[3rem] opacity-30 blur-2xl gold-gradient" />
+            </div>
+          </motion.div>
         </motion.div>
 
         {/* Steps */}
