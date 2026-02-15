@@ -45,7 +45,7 @@ export function FooterSection({ data }: Props) {
 
           <div>
             {data.links.map((link, i) => {
-              const isOffer = link.label.toLowerCase().includes('оферт');
+              const isOffer = link.label.toLowerCase().includes('оферт') || link.url === '#offer';
               return isOffer ? (
                 <button
                   key={i}
