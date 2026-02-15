@@ -68,7 +68,7 @@ export function PartnersSection({ data, onPartnerClick }: Props) {
           {lang === 'ru' ? 'Как подключиться' : 'Қалай қосылу'}
         </motion.h2>
         <motion.div
-          className="grid sm:grid-cols-2 md:grid-cols-4 gap-8 max-w-4xl mx-auto mb-10"
+          className="grid md:grid-cols-3 lg:grid-cols-4 gap-8 max-w-4xl mx-auto mb-10"
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.2 }}
