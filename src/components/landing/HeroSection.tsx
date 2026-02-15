@@ -26,44 +26,46 @@ export function HeroSection({ data, onPartnerClick }: Props) {
             alt="subday app"
             className="absolute inset-0 w-full h-full object-cover object-top"
           />
+          <div className="absolute inset-x-0 bottom-0 z-10 px-4 pb-5 pt-20 bg-gradient-to-t from-black/70 via-black/40 to-transparent">
+            <motion.div
+              className="flex flex-col items-center gap-3"
+              initial="hidden"
+              animate="visible"
+              variants={staggerContainer}
+            >
+              <motion.div
+                className="grid grid-cols-2 gap-3 w-full"
+                variants={fadeUp}
+              >
+                <a
+                  href={data.app_store_url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn-dark gap-2 text-xs justify-center"
+                >
+                  <img src={appStoreLogo} alt="App Store" className="h-4 w-4 object-contain" />
+                  App Store
+                </a>
+                <a
+                  href={data.google_play_url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn-dark gap-2 text-xs justify-center"
+                >
+                  <img src={googlePlayLogo} alt="Google Play" className="h-4 w-4 object-contain" />
+                  Google Play
+                </a>
+              </motion.div>
+              <motion.button
+                onClick={onPartnerClick}
+                className="btn-gold w-full"
+                variants={fadeUp}
+              >
+                {lang === 'ru' ? 'Стать партнёром' : 'Серіктес болу'}
+              </motion.button>
+            </motion.div>
+          </div>
         </div>
-        <motion.div
-          className="flex flex-col items-center gap-3 mt-4 px-2"
-          initial="hidden"
-          animate="visible"
-          variants={staggerContainer}
-        >
-          <motion.div
-            className="grid grid-cols-2 gap-3 w-full"
-            variants={fadeUp}
-          >
-            <a
-              href={data.app_store_url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn-dark gap-2 text-xs justify-center"
-            >
-              <img src={appStoreLogo} alt="App Store" className="h-4 w-4 object-contain" />
-              App Store
-            </a>
-            <a
-              href={data.google_play_url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn-dark gap-2 text-xs justify-center"
-            >
-              <img src={googlePlayLogo} alt="Google Play" className="h-4 w-4 object-contain" />
-              Google Play
-            </a>
-          </motion.div>
-          <motion.button
-            onClick={onPartnerClick}
-            className="btn-gold w-full"
-            variants={fadeUp}
-          >
-            {lang === 'ru' ? 'Стать партнёром' : 'Серіктес болу'}
-          </motion.button>
-        </motion.div>
       </section>
     );
   }
