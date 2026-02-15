@@ -72,11 +72,11 @@ export function PartnersSection({ data, onPartnerClick }: Props) {
           >
             <div className="relative mx-auto w-[260px] md:w-[300px]">
               <div className="rounded-[2.5rem] border-[6px] border-foreground/90 bg-foreground/90 p-1.5 shadow-2xl">
-                <div className="overflow-hidden rounded-[2rem] bg-background">
+              <div className="overflow-hidden rounded-[2rem] bg-background aspect-[9/19.5]">
                   <img
                     src={partnerCabinetMockup}
                     alt="Кабинет партнёра subday"
-                    className="w-full h-auto block"
+                    className="w-full h-full object-cover object-top block"
                   />
                 </div>
               </div>
