@@ -34,17 +34,17 @@ export function CtaSection({ data, onPartnerClick }: Props) {
           variants={fadeUp}
           transition={{ duration: 0.5 }}
         >
-          <div className="flex flex-row gap-3">
-            <a href={data.app_store_url} target="_blank" rel="noopener noreferrer" className="btn-dark gap-2 text-xs sm:text-sm justify-center flex-1">
+          <div className="grid grid-cols-2 gap-3 w-full sm:flex sm:flex-row sm:w-auto">
+            <a href={data.app_store_url} target="_blank" rel="noopener noreferrer" className="btn-dark gap-2 text-xs sm:text-sm justify-center">
               <img src={appStoreLogo} alt="App Store" className="h-4 w-4 sm:h-5 sm:w-5 object-contain" />
               App Store
             </a>
-            <a href={data.google_play_url} target="_blank" rel="noopener noreferrer" className="btn-dark gap-2 text-xs sm:text-sm justify-center flex-1">
+            <a href={data.google_play_url} target="_blank" rel="noopener noreferrer" className="btn-dark gap-2 text-xs sm:text-sm justify-center">
               <img src={googlePlayLogo} alt="Google Play" className="h-4 w-4 sm:h-5 sm:w-5 object-contain" />
               Google Play
             </a>
           </div>
-          <button onClick={onPartnerClick} className="btn-gold w-full">
+          <button onClick={onPartnerClick} className="btn-gold w-full sm:w-auto">
             {lang === 'ru' ? 'Стать партнёром' : 'Серіктес болу'}
           </button>
         </motion.div>
