@@ -145,7 +145,7 @@ export function PartnersSection({ data, onPartnerClick }: Props) {
           transition={{ duration: 0.5 }}
         >
           <button onClick={onPartnerClick} className="btn-gold">
-            {lang === 'ru' ? 'Оставить заявку' : 'Өтінім қалдыру'}
+            {lang === 'ru' ? 'Стать партнёром' : 'Серіктес болу'}
           </button>
         </motion.div>
       </div>
