@@ -8,18 +8,32 @@ interface Bean {
   rotation: number;
   rotationSpeed: number;
   opacity: number;
+  type: 'bean' | 'logo1' | 'logo2';
 }
 
 export function CoffeeBeansBackground() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const beansRef = useRef<Bean[]>([]);
   const animRef = useRef<number>(0);
+  const imagesRef = useRef<{ logo1: HTMLImageElement | null; logo2: HTMLImageElement | null }>({ logo1: null, logo2: null });
 
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
+
+    // Load logo images
+    const logo1 = new Image();
+    logo1.src = '/images/subday-icon.png';
+    logo1.onload = () => { imagesRef.current.logo1 = logo1; };
+
+    const logo2 = new Image();
+    // Use the existing header logo
+    import('@/assets/logo-subday.png').then((mod) => {
+      logo2.src = mod.default;
+      logo2.onload = () => { imagesRef.current.logo2 = logo2; };
+    });
 
     const resize = () => {
       canvas.width = window.innerWidth;
@@ -29,18 +43,31 @@ export function CoffeeBeansBackground() {
     window.addEventListener('resize', resize);
 
     const BEAN_COUNT = 18;
+    const LOGO_COUNT = 4; // 2 of each logo type
 
-    const createBean = (randomY = false): Bean => ({
-      x: Math.random() * canvas.width,
-      y: randomY ? Math.random() * canvas.height : -30,
-      size: 10 + Math.random() * 10,
-      speed: 0.3 + Math.random() * 0.7,
-      rotation: Math.random() * Math.PI * 2,
-      rotationSpeed: (Math.random() - 0.5) * 0.02,
-      opacity: 0.06 + Math.random() * 0.06,
-    });
+    const createBean = (randomY = false, forceType?: Bean['type']): Bean => {
+      let type: Bean['type'] = 'bean';
+      if (forceType) {
+        type = forceType;
+      }
+      const isLogo = type !== 'bean';
+      return {
+        x: Math.random() * canvas.width,
+        y: randomY ? Math.random() * canvas.height : -(isLogo ? 40 : 30),
+        size: isLogo ? 18 + Math.random() * 14 : 10 + Math.random() * 10,
+        speed: isLogo ? 0.2 + Math.random() * 0.5 : 0.3 + Math.random() * 0.7,
+        rotation: isLogo ? 0 : Math.random() * Math.PI * 2,
+        rotationSpeed: isLogo ? (Math.random() - 0.5) * 0.01 : (Math.random() - 0.5) * 0.02,
+        opacity: isLogo ? 0.08 + Math.random() * 0.06 : 0.06 + Math.random() * 0.06,
+        type,
+      };
+    };
 
-    beansRef.current = Array.from({ length: BEAN_COUNT }, () => createBean(true));
+    const items: Bean[] = [];
+    for (let i = 0; i < BEAN_COUNT; i++) items.push(createBean(true, 'bean'));
+    for (let i = 0; i < LOGO_COUNT / 2; i++) items.push(createBean(true, 'logo1'));
+    for (let i = 0; i < LOGO_COUNT / 2; i++) items.push(createBean(true, 'logo2'));
+    beansRef.current = items;
 
     const drawBean = (bean: Bean) => {
       ctx.save();
@@ -48,23 +75,27 @@ export function CoffeeBeansBackground() {
       ctx.rotate(bean.rotation);
       ctx.globalAlpha = bean.opacity;
 
-      const w = bean.size * 0.7;
-      const h = bean.size;
-
-      // Bean shape
-      ctx.beginPath();
-      ctx.ellipse(0, 0, w, h, 0, 0, Math.PI * 2);
-      ctx.fillStyle = '#8B6914';
-      ctx.fill();
-
-      // Center line
-      ctx.beginPath();
-      ctx.moveTo(0, -h * 0.8);
-      ctx.quadraticCurveTo(w * 0.3, 0, 0, h * 0.8);
-      ctx.strokeStyle = '#6B4F10';
-      ctx.lineWidth = 1;
-      ctx.globalAlpha = bean.opacity * 0.5;
-      ctx.stroke();
+      if (bean.type === 'bean') {
+        const w = bean.size * 0.7;
+        const h = bean.size;
+        ctx.beginPath();
+        ctx.ellipse(0, 0, w, h, 0, 0, Math.PI * 2);
+        ctx.fillStyle = '#8B6914';
+        ctx.fill();
+        ctx.beginPath();
+        ctx.moveTo(0, -h * 0.8);
+        ctx.quadraticCurveTo(w * 0.3, 0, 0, h * 0.8);
+        ctx.strokeStyle = '#6B4F10';
+        ctx.lineWidth = 1;
+        ctx.globalAlpha = bean.opacity * 0.5;
+        ctx.stroke();
+      } else {
+        const img = bean.type === 'logo1' ? imagesRef.current.logo1 : imagesRef.current.logo2;
+        if (img) {
+          const s = bean.size * 2;
+          ctx.drawImage(img, -s / 2, -s / 2, s, s);
+        }
+      }
 
       ctx.restore();
     };
@@ -76,8 +107,8 @@ export function CoffeeBeansBackground() {
         bean.y += bean.speed;
         bean.rotation += bean.rotationSpeed;
 
-        if (bean.y > canvas.height + 30) {
-          Object.assign(bean, createBean(false));
+        if (bean.y > canvas.height + 50) {
+          Object.assign(bean, createBean(false, bean.type));
         }
 
         drawBean(bean);
