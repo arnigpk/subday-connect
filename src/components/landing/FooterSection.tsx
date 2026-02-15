@@ -5,6 +5,7 @@ import { motion } from 'framer-motion';
 import { fadeUp, staggerContainer } from '@/lib/animations';
 import logoSubday from '@/assets/logo-subday.png';
 import { OfferModal } from './OfferModal';
+import { PrivacyModal } from './PrivacyModal';
 
 interface Props {
   data: FooterData;
@@ -12,6 +13,7 @@ interface Props {
 
 export function FooterSection({ data }: Props) {
   const [offerOpen, setOfferOpen] = useState(false);
+  const [privacyOpen, setPrivacyOpen] = useState(false);
 
   return (
     <motion.footer
@@ -46,20 +48,23 @@ export function FooterSection({ data }: Props) {
           <div>
             {data.links.map((link, i) => {
               const isOffer = link.label.toLowerCase().includes('оферт') || link.url === '#offer';
-              return isOffer ? (
-                <button
-                  key={i}
-                  onClick={() => setOfferOpen(true)}
-                  className="block text-sm text-muted-foreground hover:text-foreground transition-colors mb-2 text-left"
-                >
-                  {link.label}
-                </button>
-              ) : (
-                <a
-                  key={i}
-                  href={link.url}
-                  className="block text-sm text-muted-foreground hover:text-foreground transition-colors mb-2"
-                >
+              const isPrivacy = link.label.toLowerCase().includes('конфиденциальн') || link.url === '#privacy';
+              if (isOffer) {
+                return (
+                  <button key={i} onClick={() => setOfferOpen(true)} className="block text-sm text-muted-foreground hover:text-foreground transition-colors mb-2 text-left">
+                    {link.label}
+                  </button>
+                );
+              }
+              if (isPrivacy) {
+                return (
+                  <button key={i} onClick={() => setPrivacyOpen(true)} className="block text-sm text-muted-foreground hover:text-foreground transition-colors mb-2 text-left">
+                    {link.label}
+                  </button>
+                );
+              }
+              return (
+                <a key={i} href={link.url} className="block text-sm text-muted-foreground hover:text-foreground transition-colors mb-2">
                   {link.label}
                 </a>
               );
@@ -73,6 +78,7 @@ export function FooterSection({ data }: Props) {
       </div>
 
       <OfferModal open={offerOpen} onClose={() => setOfferOpen(false)} />
+      <PrivacyModal open={privacyOpen} onClose={() => setPrivacyOpen(false)} />
     </motion.footer>
   );
 }
