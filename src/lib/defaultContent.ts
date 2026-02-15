@@ -69,13 +69,17 @@ const contentRu: SiteContent = {
         ],
         reviews: [
           { text: 'subday изменил мои утренние привычки. Кофе каждый день — это просто и приятно.', author: 'Алия М.', role: 'Пользователь' },
-          { text: 'Поток повторных гостей вырос на 40% после подключения к subday.', author: 'Марат К.', role: 'Владелец кофейни' }
+          { text: 'Поток повторных гостей вырос на 40% после подключения к subday.', author: 'Марат К.', role: 'Владелец кофейни' },
+          { text: 'Экономлю около 15 000 тенге в месяц на кофе. Подписка окупается за 3 дня!', author: 'Дана С.', role: 'Пользователь' },
+          { text: 'Удобная система для заведения — подключились за день, гости довольны.', author: 'Ержан Т.', role: 'Управляющий кафе' }
         ],
         partner_logos_title: 'Наши партнёры',
         partner_logos: [
           { url: '/placeholder.svg', name: 'Партнёр 1' },
           { url: '/placeholder.svg', name: 'Партнёр 2' },
-          { url: '/placeholder.svg', name: 'Партнёр 3' }
+          { url: '/placeholder.svg', name: 'Партнёр 3' },
+          { url: '/placeholder.svg', name: 'Партнёр 4' },
+          { url: '/placeholder.svg', name: 'Партнёр 5' }
         ]
       }
     },
@@ -191,13 +195,17 @@ const contentKz: SiteContent = {
         ],
         reviews: [
           { text: 'subday таңғы әдеттерімді өзгертті. Күн сайын кофе — қарапайым және жағымды.', author: 'Әлия М.', role: 'Пайдаланушы' },
-          { text: 'subday қосылғаннан кейін қайта келетін қонақтар 40%-ға өсті.', author: 'Марат К.', role: 'Кофехана иесі' }
+          { text: 'subday қосылғаннан кейін қайта келетін қонақтар 40%-ға өсті.', author: 'Марат К.', role: 'Кофехана иесі' },
+          { text: 'Айына 15 000 теңге үнемдеймін. Жазылым 3 күнде өзін ақтайды!', author: 'Дана С.', role: 'Пайдаланушы' },
+          { text: 'Мекемеге ыңғайлы жүйе — бір күнде қосылдық, қонақтар ризашылды.', author: 'Ержан Т.', role: 'Кафе басқарушысы' }
         ],
         partner_logos_title: 'Біздің серіктестер',
         partner_logos: [
           { url: '/placeholder.svg', name: 'Серіктес 1' },
           { url: '/placeholder.svg', name: 'Серіктес 2' },
-          { url: '/placeholder.svg', name: 'Серіктес 3' }
+          { url: '/placeholder.svg', name: 'Серіктес 3' },
+          { url: '/placeholder.svg', name: 'Серіктес 4' },
+          { url: '/placeholder.svg', name: 'Серіктес 5' }
         ]
       }
     },
