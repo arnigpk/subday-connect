@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import { fadeUp, scaleIn, staggerContainer } from '@/lib/animations';
 import appStoreLogo from '@/assets/app-store.png';
 import googlePlayLogo from '@/assets/google-play.png';
-import appMockup from '@/assets/app-mockup.jpeg';
+import appMockup from '@/assets/app-mockup.png';
 
 interface Props {
   data: HeroData;
