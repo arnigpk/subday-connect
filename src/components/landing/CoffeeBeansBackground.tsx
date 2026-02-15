@@ -43,7 +43,7 @@ export function CoffeeBeansBackground() {
     window.addEventListener('resize', resize);
 
     const BEAN_COUNT = 18;
-    const LOGO_COUNT = 10; // 5 of each logo type
+    const LOGO_COUNT = 4; // 2 of each logo type
 
     const createBean = (randomY = false, forceType?: Bean['type']): Bean => {
       let type: Bean['type'] = 'bean';
@@ -54,7 +54,7 @@ export function CoffeeBeansBackground() {
       return {
         x: Math.random() * canvas.width,
         y: randomY ? Math.random() * canvas.height : -(isLogo ? 40 : 30),
-        size: isLogo ? 28 + Math.random() * 20 : 10 + Math.random() * 10,
+        size: isLogo ? 18 + Math.random() * 14 : 10 + Math.random() * 10,
         speed: isLogo ? 0.2 + Math.random() * 0.5 : 0.3 + Math.random() * 0.7,
         rotation: isLogo ? 0 : Math.random() * Math.PI * 2,
         rotationSpeed: isLogo ? (Math.random() - 0.5) * 0.01 : (Math.random() - 0.5) * 0.02,
