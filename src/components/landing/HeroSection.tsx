@@ -7,6 +7,7 @@ import appStoreLogo from '@/assets/app-store.png';
 import googlePlayLogo from '@/assets/google-play.png';
 import appMockup from '@/assets/app-mockup.png';
 import heroMobile from '@/assets/hero-mobile.png';
+import heroDesktop from '@/assets/hero-desktop.png';
 
 interface Props {
   data: HeroData;
@@ -71,23 +72,29 @@ export function HeroSection({ data, onPartnerClick }: Props) {
   }
 
   return (
-    <section className="pt-24 pb-12 md:pt-32 md:pb-20 overflow-hidden">
-      <motion.div
-        className="container mx-auto"
-        initial="hidden"
-        animate="visible"
-        variants={staggerContainer}
-      >
-        <div className="flex flex-col items-center text-center max-w-3xl mx-auto">
+    <section className="w-full pt-20 pb-4 px-4 md:px-6 lg:px-8">
+      <div className="relative w-full rounded-2xl overflow-hidden" style={{ minHeight: '70vh' }}>
+        <img
+          src={heroDesktop}
+          alt="subday app"
+          className="absolute inset-0 w-full h-full object-cover"
+        />
+        <div className="absolute inset-0 z-10 flex flex-col justify-end p-8 md:p-12 lg:p-16 bg-gradient-to-t from-black/60 via-black/20 to-transparent">
+          <motion.div
+            className="max-w-2xl"
+            initial="hidden"
+            animate="visible"
+            variants={staggerContainer}
+          >
             <motion.h1
-              className="heading-xl whitespace-pre-line mb-6"
+              className="heading-xl text-white whitespace-pre-line mb-4"
               variants={fadeUp}
               transition={{ duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] }}
             >
               {data.title}
             </motion.h1>
             <motion.p
-              className="text-body text-muted-foreground max-w-xl mb-10"
+              className="text-body text-white/80 max-w-xl mb-8"
               variants={fadeUp}
               transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
             >
@@ -95,36 +102,35 @@ export function HeroSection({ data, onPartnerClick }: Props) {
             </motion.p>
 
             <motion.div
-              className="flex flex-col items-center justify-center gap-3 w-full max-w-md mx-auto sm:max-w-none sm:w-auto"
+              className="flex flex-wrap items-center gap-3"
               variants={fadeUp}
               transition={{ duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] }}
             >
-              <div className="grid grid-cols-2 gap-3 w-full sm:flex sm:flex-row sm:w-auto">
-                <a
-                  href={data.app_store_url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="btn-dark gap-2 text-xs sm:text-sm justify-center"
-                >
-                  <img src={appStoreLogo} alt="App Store" className="h-4 w-4 sm:h-5 sm:w-5 object-contain" />
-                  App Store
-                </a>
-                <a
-                  href={data.google_play_url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="btn-dark gap-2 text-xs sm:text-sm justify-center"
-                >
-                  <img src={googlePlayLogo} alt="Google Play" className="h-4 w-4 sm:h-5 sm:w-5 object-contain" />
-                  Google Play
-                </a>
-              </div>
-              <button onClick={onPartnerClick} className="btn-gold w-full sm:w-auto">
+              <a
+                href={data.app_store_url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-dark gap-2 text-sm justify-center"
+              >
+                <img src={appStoreLogo} alt="App Store" className="h-5 w-5 object-contain" />
+                App Store
+              </a>
+              <a
+                href={data.google_play_url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-dark gap-2 text-sm justify-center"
+              >
+                <img src={googlePlayLogo} alt="Google Play" className="h-5 w-5 object-contain" />
+                Google Play
+              </a>
+              <button onClick={onPartnerClick} className="btn-gold">
                 {lang === 'ru' ? 'Стать партнёром' : 'Серіктес болу'}
               </button>
             </motion.div>
+          </motion.div>
         </div>
-      </motion.div>
+      </div>
     </section>
   );
 }
