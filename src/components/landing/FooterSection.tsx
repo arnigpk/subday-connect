@@ -1,14 +1,18 @@
+import { useState } from 'react';
 import { FooterData } from '@/lib/types';
 import { Mail, Phone, MapPin } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { fadeUp, staggerContainer } from '@/lib/animations';
 import logoSubday from '@/assets/logo-subday.png';
+import { OfferModal } from './OfferModal';
 
 interface Props {
   data: FooterData;
 }
 
 export function FooterSection({ data }: Props) {
+  const [offerOpen, setOfferOpen] = useState(false);
+
   return (
     <motion.footer
       className="border-t border-border py-12"
@@ -40,15 +44,26 @@ export function FooterSection({ data }: Props) {
           </div>
 
           <div>
-            {data.links.map((link, i) => (
-              <a
-                key={i}
-                href={link.url}
-                className="block text-sm text-muted-foreground hover:text-foreground transition-colors mb-2"
-              >
-                {link.label}
-              </a>
-            ))}
+            {data.links.map((link, i) => {
+              const isOffer = link.label.toLowerCase().includes('оферт');
+              return isOffer ? (
+                <button
+                  key={i}
+                  onClick={() => setOfferOpen(true)}
+                  className="block text-sm text-muted-foreground hover:text-foreground transition-colors mb-2 text-left"
+                >
+                  {link.label}
+                </button>
+              ) : (
+                <a
+                  key={i}
+                  href={link.url}
+                  className="block text-sm text-muted-foreground hover:text-foreground transition-colors mb-2"
+                >
+                  {link.label}
+                </a>
+              );
+            })}
           </div>
 
           <div className="text-sm text-muted-foreground md:text-right">
@@ -56,6 +71,8 @@ export function FooterSection({ data }: Props) {
           </div>
         </motion.div>
       </div>
+
+      <OfferModal open={offerOpen} onClose={() => setOfferOpen(false)} />
     </motion.footer>
   );
 }
