@@ -22,18 +22,16 @@ export function HeroSection({ data, onPartnerClick }: Props) {
         animate="visible"
         variants={staggerContainer}
       >
-        <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-16">
-          {/* Text content */}
-          <div className="flex-1 text-center lg:text-left">
+        <div className="flex flex-col items-center text-center max-w-3xl mx-auto">
             <motion.h1
-              className="heading-xl max-w-3xl mx-auto lg:mx-0 whitespace-pre-line mb-6"
+              className="heading-xl whitespace-pre-line mb-6"
               variants={fadeUp}
               transition={{ duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] }}
             >
               {data.title}
             </motion.h1>
             <motion.p
-              className="text-body text-muted-foreground max-w-xl mx-auto lg:mx-0 mb-10"
+              className="text-body text-muted-foreground max-w-xl mb-10"
               variants={fadeUp}
               transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
             >
@@ -41,7 +39,7 @@ export function HeroSection({ data, onPartnerClick }: Props) {
             </motion.p>
 
             <motion.div
-              className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-3"
+              className="flex flex-col sm:flex-row items-center justify-center gap-3"
               variants={fadeUp}
               transition={{ duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] }}
             >
@@ -67,34 +65,6 @@ export function HeroSection({ data, onPartnerClick }: Props) {
                 {lang === 'ru' ? 'Оставить заявку' : 'Өтінім қалдыру'}
               </button>
             </motion.div>
-          </div>
-
-          {/* Phone mockup */}
-          <motion.div
-            className="flex-shrink-0"
-            variants={scaleIn}
-            transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94], delay: 0.3 }}
-          >
-            <motion.div
-              animate={{ y: [0, -12, 0] }}
-              transition={{ duration: 4, ease: 'easeInOut', repeat: Infinity }}
-            >
-              <div className="relative mx-auto w-[260px] md:w-[300px]">
-                {/* Phone frame */}
-                <div className="rounded-[2.5rem] border-[6px] border-foreground/90 bg-foreground/90 p-1.5 shadow-2xl">
-                  <div className="overflow-hidden rounded-[2rem] bg-background">
-                    <img
-                      src={appMockup}
-                      alt="subday app"
-                      className="w-full h-auto block"
-                    />
-                  </div>
-                </div>
-                {/* Decorative glow */}
-                <div className="absolute -inset-4 -z-10 rounded-[3rem] opacity-30 blur-2xl gold-gradient" />
-              </div>
-            </motion.div>
-          </motion.div>
         </div>
       </motion.div>
     </section>
