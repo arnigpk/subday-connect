@@ -19,13 +19,13 @@ export function HeroSection({ data, onPartnerClick }: Props) {
 
   if (isMobile) {
     return (
-      <section className="relative w-full min-h-[85vh] flex flex-col">
+      <section className="relative w-full min-h-screen flex flex-col pt-20">
         <img
           src={heroMobile}
           alt="subday app"
-          className="absolute inset-0 w-full h-full object-cover"
+          className="absolute inset-0 w-full h-full object-cover object-top"
         />
-        <div className="relative z-10 mt-auto px-4 pb-8 pt-16 bg-gradient-to-t from-black/60 via-black/30 to-transparent">
+        <div className="relative z-10 mt-auto px-4 pb-6 pt-20 bg-gradient-to-t from-black/70 via-black/40 to-transparent">
           <motion.div
             className="flex flex-col items-center gap-3"
             initial="hidden"
