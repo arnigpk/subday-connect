@@ -1,13 +1,19 @@
 import { TrustData } from '@/lib/types';
-import { Quote } from 'lucide-react';
+import { Quote, ChevronLeft, ChevronRight } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { fadeUp, fadeIn, scaleIn, staggerContainer } from '@/lib/animations';
+import {
+  Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext
+} from '@/components/ui/carousel';
 
 interface Props {
   data: TrustData;
 }
 
 export function TrustSection({ data }: Props) {
+  const partnerLogos = data.partner_logos || [];
+  const partnerLogosTitle = data.partner_logos_title || 'Наши партнёры';
+
   return (
     <section id="trust" className="section-padding overflow-hidden">
       <div className="container mx-auto">
@@ -65,31 +71,72 @@ export function TrustSection({ data }: Props) {
           ))}
         </motion.div>
 
-        {/* Reviews */}
+        {/* Reviews Carousel */}
         {data.reviews.length > 0 && (
           <motion.div
-            className="grid md:grid-cols-2 gap-6 max-w-3xl mx-auto"
+            className="max-w-3xl mx-auto mb-16"
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, amount: 0.2 }}
-            variants={staggerContainer}
+            variants={fadeUp}
+            transition={{ duration: 0.6 }}
           >
-            {data.reviews.map((review, i) => (
-              <motion.div
-                key={i}
-                className="card-elevated"
-                variants={scaleIn}
-                transition={{ duration: 0.5 }}
-                whileHover={{ y: -4, transition: { duration: 0.2 } }}
-              >
-                <Quote size={20} className="mb-4 opacity-20" />
-                <p className="text-body-sm mb-4">{review.text}</p>
-                <div>
-                  <div className="font-semibold text-sm">{review.author}</div>
-                  <div className="text-xs text-muted-foreground">{review.role}</div>
-                </div>
-              </motion.div>
-            ))}
+            <Carousel opts={{ align: 'start', loop: true }} className="w-full">
+              <CarouselContent className="-ml-4">
+                {data.reviews.map((review, i) => (
+                  <CarouselItem key={i} className="pl-4 md:basis-1/2">
+                    <div className="card-elevated h-full">
+                      <Quote size={20} className="mb-4 opacity-20" />
+                      <p className="text-body-sm mb-4">{review.text}</p>
+                      <div>
+                        <div className="font-semibold text-sm">{review.author}</div>
+                        <div className="text-xs text-muted-foreground">{review.role}</div>
+                      </div>
+                    </div>
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+              {data.reviews.length > 2 && (
+                <>
+                  <CarouselPrevious className="-left-4 md:-left-12" />
+                  <CarouselNext className="-right-4 md:-right-12" />
+                </>
+              )}
+            </Carousel>
+          </motion.div>
+        )}
+
+        {/* Partner Logos */}
+        {partnerLogos.length > 0 && (
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.3 }}
+            variants={fadeUp}
+            transition={{ duration: 0.6 }}
+          >
+            <h3 className="text-xl md:text-2xl font-bold text-center mb-8">{partnerLogosTitle}</h3>
+            <div className="flex flex-wrap items-center justify-center gap-8 md:gap-12">
+              {partnerLogos.map((logo, i) => (
+                <motion.div
+                  key={i}
+                  className="flex flex-col items-center gap-2"
+                  variants={scaleIn}
+                  transition={{ duration: 0.4, delay: i * 0.05 }}
+                >
+                  <div className="w-20 h-20 md:w-24 md:h-24 rounded-2xl bg-accent/50 border border-border flex items-center justify-center overflow-hidden p-3">
+                    <img
+                      src={logo.url}
+                      alt={logo.name}
+                      className="max-w-full max-h-full object-contain"
+                    />
+                  </div>
+                  {logo.name && (
+                    <span className="text-xs text-muted-foreground text-center max-w-[6rem] truncate">{logo.name}</span>
+                  )}
+                </motion.div>
+              ))}
+            </div>
           </motion.div>
         )}
       </div>

@@ -78,11 +78,18 @@ export interface TrustReview {
   role: string;
 }
 
+export interface PartnerLogo {
+  url: string;
+  name: string;
+}
+
 export interface TrustData {
   title: string;
   logos: TrustLogo[];
   metrics: TrustMetric[];
   reviews: TrustReview[];
+  partner_logos_title: string;
+  partner_logos: PartnerLogo[];
 }
 
 export interface FaqItem {

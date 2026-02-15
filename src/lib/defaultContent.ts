@@ -70,6 +70,12 @@ const contentRu: SiteContent = {
         reviews: [
           { text: 'subday изменил мои утренние привычки. Кофе каждый день — это просто и приятно.', author: 'Алия М.', role: 'Пользователь' },
           { text: 'Поток повторных гостей вырос на 40% после подключения к subday.', author: 'Марат К.', role: 'Владелец кофейни' }
+        ],
+        partner_logos_title: 'Наши партнёры',
+        partner_logos: [
+          { url: '/placeholder.svg', name: 'Партнёр 1' },
+          { url: '/placeholder.svg', name: 'Партнёр 2' },
+          { url: '/placeholder.svg', name: 'Партнёр 3' }
         ]
       }
     },
@@ -186,6 +192,12 @@ const contentKz: SiteContent = {
         reviews: [
           { text: 'subday таңғы әдеттерімді өзгертті. Күн сайын кофе — қарапайым және жағымды.', author: 'Әлия М.', role: 'Пайдаланушы' },
           { text: 'subday қосылғаннан кейін қайта келетін қонақтар 40%-ға өсті.', author: 'Марат К.', role: 'Кофехана иесі' }
+        ],
+        partner_logos_title: 'Біздің серіктестер',
+        partner_logos: [
+          { url: '/placeholder.svg', name: 'Серіктес 1' },
+          { url: '/placeholder.svg', name: 'Серіктес 2' },
+          { url: '/placeholder.svg', name: 'Серіктес 3' }
         ]
       }
     },
