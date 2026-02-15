@@ -44,7 +44,7 @@ export function CtaSection({ data, onPartnerClick }: Props) {
               Google Play
             </a>
           </div>
-          <button onClick={onPartnerClick} className="btn-gold w-full sm:w-auto">
+          <button onClick={onPartnerClick} className="btn-gold w-full sm:w-auto" style={{ minWidth: '100%' }}>
             {lang === 'ru' ? 'Стать партнёром' : 'Серіктес болу'}
           </button>
         </motion.div>
