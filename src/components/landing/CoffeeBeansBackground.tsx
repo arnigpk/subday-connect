@@ -43,7 +43,7 @@ export function CoffeeBeansBackground() {
     window.addEventListener('resize', resize);
 
     const BEAN_COUNT = 16;
-    const LOGO_COUNT = 10; // 5 of each logo type
+    const LOGO_COUNT = 6; // 3 of each logo type
 
     const createBean = (randomY = false, forceType?: Bean['type']): Bean => {
       let type: Bean['type'] = 'bean';
@@ -57,7 +57,7 @@ export function CoffeeBeansBackground() {
         size: isLogo ? 22 + Math.random() * 18 : 10 + Math.random() * 10,
         speed: isLogo ? 0.2 + Math.random() * 0.5 : 0.3 + Math.random() * 0.7,
         rotation: isLogo ? 0 : Math.random() * Math.PI * 2,
-        rotationSpeed: isLogo ? (Math.random() - 0.5) * 0.01 : (Math.random() - 0.5) * 0.02,
+        rotationSpeed: isLogo ? 0 : (Math.random() - 0.5) * 0.02,
         opacity: isLogo ? 0.15 + Math.random() * 0.1 : 0.06 + Math.random() * 0.06,
         type,
       };
@@ -93,7 +93,10 @@ export function CoffeeBeansBackground() {
         const img = bean.type === 'logo1' ? imagesRef.current.logo1 : imagesRef.current.logo2;
         if (img) {
           const s = bean.size * 2;
-          ctx.drawImage(img, -s / 2, -s / 2, s, s);
+          const ratio = img.naturalWidth / img.naturalHeight;
+          const w = bean.type === 'logo2' ? s * Math.min(ratio, 1) : s;
+          const h = bean.type === 'logo2' ? w / ratio : s;
+          ctx.drawImage(img, -w / 2, -h / 2, w, h);
         }
       }
 
