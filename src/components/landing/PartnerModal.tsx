@@ -19,6 +19,26 @@ export function PartnerModal({ open, onClose }: Props) {
 
   const t = (ru: string, kz: string) => (lang === 'ru' ? ru : kz);
 
+  const formatPhone = (value: string) => {
+    const digits = value.replace(/\D/g, '').slice(0, 11);
+    if (digits.length === 0) return '';
+    let result = '+7';
+    if (digits.length > 1) result += ' (' + digits.slice(1, 4);
+    if (digits.length >= 4) result += ') ';
+    if (digits.length > 4) result += digits.slice(4, 7);
+    if (digits.length > 7) result += '-' + digits.slice(7, 9);
+    if (digits.length > 9) result += '-' + digits.slice(9, 11);
+    return result;
+  };
+
+  const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const raw = e.target.value;
+    // Allow clearing
+    if (raw === '') { setForm({ ...form, phone: '' }); return; }
+    const formatted = formatPhone(raw);
+    setForm({ ...form, phone: formatted });
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
@@ -81,12 +101,13 @@ export function PartnerModal({ open, onClose }: Props) {
             />
             <input
               type="tel"
-              placeholder={t('Номер телефона', 'Телефон нөмірі')}
+              placeholder="+7 (___) ___-__-__"
               value={form.phone}
-              onChange={(e) => setForm({ ...form, phone: e.target.value })}
+              onChange={handlePhoneChange}
+              onFocus={() => { if (!form.phone) setForm({ ...form, phone: '+7' }); }}
               className="input-field"
               required
-              maxLength={20}
+              maxLength={18}
             />
             <input
               type="text"
