@@ -39,16 +39,16 @@ export function HeroSection({ data, onPartnerClick }: Props) {
             </motion.p>
 
             <motion.div
-              className="flex flex-col items-center justify-center gap-3"
+              className="flex flex-col items-center justify-center gap-3 w-full max-w-md mx-auto sm:max-w-none sm:w-auto"
               variants={fadeUp}
               transition={{ duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] }}
             >
-              <div className="flex flex-row items-center justify-center gap-3 w-full sm:w-auto">
+              <div className="grid grid-cols-2 gap-3 w-full sm:flex sm:flex-row sm:w-auto">
                 <a
                   href={data.app_store_url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="btn-dark gap-2 flex-1 sm:flex-none text-xs sm:text-sm"
+                  className="btn-dark gap-2 text-xs sm:text-sm justify-center"
                 >
                   <img src={appStoreLogo} alt="App Store" className="h-4 w-4 sm:h-5 sm:w-5 object-contain" />
                   App Store
@@ -57,7 +57,7 @@ export function HeroSection({ data, onPartnerClick }: Props) {
                   href={data.google_play_url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="btn-dark gap-2 flex-1 sm:flex-none text-xs sm:text-sm"
+                  className="btn-dark gap-2 text-xs sm:text-sm justify-center"
                 >
                   <img src={googlePlayLogo} alt="Google Play" className="h-4 w-4 sm:h-5 sm:w-5 object-contain" />
                   Google Play
