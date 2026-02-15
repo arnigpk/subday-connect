@@ -131,6 +131,7 @@ export function SectionEditorPanel({ section, onChange }: Props) {
 
     case 'trust': {
       const data = d as unknown as TrustData;
+      const partnerLogos = (data as TrustData).partner_logos || [];
       return (
         <div className="space-y-6">
           <Field label="Заголовок" value={data.title} onChange={(v) => onChange({ ...data, title: v } as TrustData)} />
@@ -154,6 +155,14 @@ export function SectionEditorPanel({ section, onChange }: Props) {
             onUpdate={(logos) => onChange({ ...data, logos } as unknown as TrustData)}
             onCreate={() => onChange({ ...data, logos: [...data.logos, { url: '', alt: '' }] } as TrustData)}
             label="Логотипы"
+          />
+          <Field label="Заголовок партнёров" value={(data as TrustData).partner_logos_title || ''} onChange={(v) => onChange({ ...data, partner_logos_title: v } as TrustData)} />
+          <ListEditor
+            items={partnerLogos as unknown as Record<string, string>[]}
+            fields={[{ key: 'url', label: 'URL логотипа' }, { key: 'name', label: 'Название' }]}
+            onUpdate={(partner_logos) => onChange({ ...data, partner_logos } as unknown as TrustData)}
+            onCreate={() => onChange({ ...data, partner_logos: [...partnerLogos, { url: '', name: '' }] } as TrustData)}
+            label="Логотипы партнёров"
           />
         </div>
       );
