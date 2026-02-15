@@ -133,7 +133,7 @@
 
   .btn-dark {
     @apply inline-flex items-center justify-center px-6 py-3 rounded-xl font-semibold text-sm transition-all duration-200;
-    background: hsl(var(--foreground) / 0.85);
+    background: hsl(var(--foreground) / 0.5);
     color: hsl(var(--background));
     backdrop-filter: blur(8px);
   }
