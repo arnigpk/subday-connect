@@ -73,11 +73,11 @@ export function HeroSection({ data, onPartnerClick }: Props) {
 
   return (
     <section className="w-full pt-20 pb-4 px-4 md:px-6 lg:px-8">
-      <div className="relative w-full rounded-2xl overflow-hidden" style={{ minHeight: '70vh' }}>
+      <div className="relative w-full rounded-2xl overflow-hidden">
         <img
           src={heroDesktop}
           alt="subday app"
-          className="absolute inset-0 w-full h-full object-cover"
+          className="w-full h-auto block"
         />
         <div className="absolute inset-0 z-10 flex items-end p-8 md:p-12 lg:p-16" style={{ paddingBottom: '8%' }}>
           <motion.div
