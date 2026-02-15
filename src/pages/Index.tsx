@@ -12,6 +12,7 @@ import { CtaSection } from '@/components/landing/CtaSection';
 import { FooterSection } from '@/components/landing/FooterSection';
 import { PartnerModal } from '@/components/landing/PartnerModal';
 import { Preloader } from '@/components/landing/Preloader';
+import { CoffeeBeansBackground } from '@/components/landing/CoffeeBeansBackground';
 import {
   HeroData, StepsData, UsersData, PartnersData,
   TrustData, FaqData, CtaData, FooterData, Section
@@ -99,6 +100,7 @@ export default function Index() {
         )}
       </Helmet>
 
+      <CoffeeBeansBackground />
       <Header />
 
       <main>
