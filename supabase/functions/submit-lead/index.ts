@@ -14,7 +14,7 @@ Deno.serve(async (req) => {
   try {
     const { name, city, phone, venue, comment } = await req.json();
 
-    if (!name || !city || !phone || !venue) {
+    if (!name || !phone || !venue) {
       return new Response(
         JSON.stringify({ error: "Missing required fields" }),
         { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
@@ -22,7 +22,7 @@ Deno.serve(async (req) => {
     }
 
     // Validate input lengths
-    if (name.length > 100 || city.length > 100 || phone.length > 20 || venue.length > 200) {
+    if (name.length > 100 || phone.length > 20 || venue.length > 200) {
       return new Response(
         JSON.stringify({ error: "Field too long" }),
         { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
@@ -39,7 +39,7 @@ Deno.serve(async (req) => {
       .from("partner_leads")
       .insert({
         name: name.trim(),
-        city: city.trim(),
+        city: (city || "").trim(),
         phone: phone.trim(),
         venue: venue.trim(),
         comment: (comment || "").trim(),
