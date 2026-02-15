@@ -3,6 +3,7 @@ import { useContent } from '@/hooks/useContent';
 import { Header } from '@/components/landing/Header';
 import { HeroSection } from '@/components/landing/HeroSection';
 import { StepsSection } from '@/components/landing/StepsSection';
+import { AppMockup } from '@/components/landing/AppMockup';
 import { UsersSection } from '@/components/landing/UsersSection';
 import { PartnersSection } from '@/components/landing/PartnersSection';
 import { TrustSection } from '@/components/landing/TrustSection';
@@ -22,7 +23,12 @@ function renderSection(section: Section, onPartnerClick: () => void) {
     case 'hero':
       return <HeroSection key={section.id} data={section.data as HeroData} onPartnerClick={onPartnerClick} />;
     case 'steps':
-      return <StepsSection key={section.id} data={section.data as StepsData} />;
+      return (
+        <div key={section.id}>
+          <StepsSection data={section.data as StepsData} />
+          <AppMockup />
+        </div>
+      );
     case 'users':
       return <UsersSection key={section.id} data={section.data as UsersData} />;
     case 'partners':
