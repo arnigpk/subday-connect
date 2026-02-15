@@ -72,7 +72,7 @@ export function HeroSection({ data, onPartnerClick }: Props) {
   }
 
   return (
-    <section className="w-full pt-20 pb-4 px-4 md:px-6 lg:px-8">
+    <section className="w-full pt-24 pb-4 px-4 md:px-6 lg:px-8">
       <div className="relative w-full rounded-2xl overflow-hidden">
         <img
           src={heroDesktop}
