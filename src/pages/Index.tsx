@@ -54,7 +54,9 @@ export default function Index() {
 
   const sections = useMemo(() => {
     if (!content?.sections) return [];
-    return [...content.sections].sort((a, b) => a.order - b.order);
+    return [...content.sections]
+      .filter((s) => s.visible !== false)
+      .sort((a, b) => a.order - b.order);
   }, [content]);
 
   const faqItems = useMemo(() => {

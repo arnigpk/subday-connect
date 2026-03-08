@@ -11,7 +11,6 @@ export default function AdminLogin() {
   const [checking, setChecking] = useState(true);
   const navigate = useNavigate();
 
-  // Auto-redirect if already authenticated as admin
   useEffect(() => {
     supabase.auth.getSession().then(async ({ data: { session } }) => {
       if (session?.user) {
@@ -65,16 +64,16 @@ export default function AdminLogin() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-background px-4">
+    <div className="min-h-screen flex items-center justify-center bg-[hsl(220,13%,8%)] px-4">
       <div className="w-full max-w-sm">
         <div className="text-center mb-8">
-          <h1 className="text-2xl font-extrabold tracking-tight mb-1">subday</h1>
-          <p className="text-sm text-muted-foreground">Панель администратора</p>
+          <h1 className="text-2xl font-extrabold tracking-tight text-white mb-1">subday</h1>
+          <p className="text-[13px] text-[hsl(220,10%,45%)]">Панель администратора</p>
         </div>
 
         <form onSubmit={handleLogin} className="space-y-4">
           {error && (
-            <div className="bg-destructive/10 text-destructive text-sm p-3 rounded-xl">
+            <div className="bg-red-500/10 border border-red-500/20 text-red-400 text-[13px] p-3 rounded-xl">
               {error}
             </div>
           )}
@@ -84,7 +83,7 @@ export default function AdminLogin() {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="Email"
-            className="input-field"
+            className="admin-input"
             required
           />
           <input
@@ -92,16 +91,16 @@ export default function AdminLogin() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             placeholder="Пароль"
-            className="input-field"
+            className="admin-input"
             required
           />
 
           <button
             type="submit"
             disabled={loading}
-            className="btn-dark w-full justify-center"
+            className="w-full flex items-center justify-center gap-2 py-3 rounded-xl text-[14px] font-semibold bg-[hsl(var(--gold))] text-white hover:bg-[hsl(var(--gold-dark))] transition-all"
           >
-            {loading && <Loader2 size={16} className="mr-2 animate-spin" />}
+            {loading && <Loader2 size={16} className="animate-spin" />}
             Войти
           </button>
         </form>

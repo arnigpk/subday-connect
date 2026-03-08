@@ -204,6 +204,22 @@
   .input-field {
     @apply w-full px-4 py-3 rounded-xl border bg-background text-foreground text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring transition-shadow;
   }
+  .admin-input {
+    @apply w-full px-3 py-2.5 rounded-xl text-[13px] transition-all;
+    background: hsl(220, 10%, 12%);
+    border: 1px solid hsl(220, 10%, 20%);
+    color: hsl(220, 10%, 85%);
+  }
+
+  .admin-input::placeholder {
+    color: hsl(220, 10%, 35%);
+  }
+
+  .admin-input:focus {
+    outline: none;
+    border-color: hsl(var(--gold) / 0.5);
+    box-shadow: 0 0 0 3px hsl(var(--gold) / 0.1);
+  }
 }
 
 @keyframes fadeIn {
