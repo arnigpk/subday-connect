@@ -15,6 +15,7 @@ export interface Section {
   id: string;
   type: SectionType;
   order: number;
+  visible?: boolean;
   data: HeroData | StepsData | UsersData | PartnersData | TrustData | FaqData | CtaData | FooterData;
 }
 
