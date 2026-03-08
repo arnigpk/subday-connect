@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Section, HeroData, StepsData, UsersData, PartnersData, TrustData, FaqData, CtaData, FooterData } from '@/lib/types';
-import { Plus, Trash2, Upload, Loader2 } from 'lucide-react';
+import { Plus, Trash2, Upload, Loader2, GripVertical, ChevronDown, ChevronRight } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 
@@ -13,12 +13,23 @@ function Field({ label, value, onChange, multiline, placeholder }: {
   label: string; value: string; onChange: (v: string) => void; multiline?: boolean; placeholder?: string;
 }) {
   return (
-    <div className="space-y-1">
-      <label className="text-xs font-medium text-muted-foreground">{label}</label>
+    <div className="space-y-1.5">
+      <label className="text-[11px] font-semibold uppercase tracking-wider text-[hsl(220,10%,45%)]">{label}</label>
       {multiline ? (
-        <textarea value={value} onChange={(e) => onChange(e.target.value)} className="input-field resize-none text-sm" rows={3} placeholder={placeholder} />
+        <textarea
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+          className="admin-input resize-none"
+          rows={3}
+          placeholder={placeholder}
+        />
       ) : (
-        <input value={value} onChange={(e) => onChange(e.target.value)} className="input-field text-sm" placeholder={placeholder} />
+        <input
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+          className="admin-input"
+          placeholder={placeholder}
+        />
       )}
     </div>
   );
@@ -48,20 +59,38 @@ function ImageUploadField({ label, value, onChange }: {
   };
 
   return (
-    <div className="space-y-1">
-      <label className="text-xs font-medium text-muted-foreground">{label}</label>
+    <div className="space-y-1.5">
+      <label className="text-[11px] font-semibold uppercase tracking-wider text-[hsl(220,10%,45%)]">{label}</label>
       <div className="flex gap-2 items-center">
-        <input value={value} onChange={(e) => onChange(e.target.value)} className="input-field text-sm flex-1" placeholder="URL или загрузите файл" />
-        <label className="shrink-0 cursor-pointer p-2 rounded-lg border border-border hover:bg-accent transition-colors">
-          {uploading ? <Loader2 size={14} className="animate-spin" /> : <Upload size={14} />}
+        <input value={value} onChange={(e) => onChange(e.target.value)} className="admin-input flex-1" placeholder="URL или загрузите" />
+        <label className="shrink-0 cursor-pointer p-2.5 rounded-lg bg-[hsl(220,10%,14%)] border border-[hsl(220,10%,20%)] hover:border-[hsl(var(--gold)/0.5)] transition-all">
+          {uploading ? <Loader2 size={14} className="animate-spin text-[hsl(var(--gold))]" /> : <Upload size={14} className="text-[hsl(220,10%,55%)]" />}
           <input type="file" accept="image/*" onChange={handleUpload} className="hidden" />
         </label>
       </div>
       {value && (
-        <div className="mt-1 w-12 h-12 rounded-lg border border-border overflow-hidden bg-accent/30">
+        <div className="mt-2 w-16 h-16 rounded-xl border border-[hsl(220,10%,20%)] overflow-hidden bg-[hsl(220,10%,14%)]">
           <img src={value} alt="" className="w-full h-full object-contain" />
         </div>
       )}
+    </div>
+  );
+}
+
+function CollapsibleGroup({ title, children, defaultOpen = true }: {
+  title: string; children: React.ReactNode; defaultOpen?: boolean;
+}) {
+  const [open, setOpen] = useState(defaultOpen);
+  return (
+    <div className="border border-[hsl(220,10%,18%)] rounded-xl overflow-hidden">
+      <button
+        onClick={() => setOpen(!open)}
+        className="w-full flex items-center justify-between px-4 py-3 text-[12px] font-semibold uppercase tracking-wider text-[hsl(220,10%,55%)] hover:text-[hsl(220,10%,75%)] bg-[hsl(220,10%,11%)] transition-colors"
+      >
+        {title}
+        {open ? <ChevronDown size={14} /> : <ChevronRight size={14} />}
+      </button>
+      {open && <div className="p-4 space-y-3">{children}</div>}
     </div>
   );
 }
@@ -80,18 +109,18 @@ function ListEditor({
   };
 
   return (
-    <div className="space-y-3">
-      <div className="flex items-center justify-between">
-        <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">{label}</span>
-        <button onClick={onCreate} className="text-xs flex items-center gap-1 text-muted-foreground hover:text-foreground transition-colors">
-          <Plus size={12} /> Добавить
-        </button>
-      </div>
+    <CollapsibleGroup title={`${label} (${items.length})`}>
       {items.map((item, i) => (
-        <div key={i} className="border border-border rounded-xl p-3 space-y-2 relative group">
-          <button onClick={() => remove(i)} className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 text-muted-foreground hover:text-destructive transition-all">
-            <Trash2 size={14} />
-          </button>
+        <div key={i} className="bg-[hsl(220,10%,11%)] rounded-xl p-3 space-y-2 relative group border border-[hsl(220,10%,16%)]">
+          <div className="flex items-center justify-between mb-1">
+            <div className="flex items-center gap-1.5 text-[hsl(220,10%,40%)]">
+              <GripVertical size={12} />
+              <span className="text-[10px] font-mono">#{i + 1}</span>
+            </div>
+            <button onClick={() => remove(i)} className="opacity-0 group-hover:opacity-100 text-[hsl(220,10%,40%)] hover:text-red-400 transition-all">
+              <Trash2 size={13} />
+            </button>
+          </div>
           {fields.map((f) => (
             f.type === 'image' ? (
               <ImageUploadField key={f.key} label={f.label} value={String(item[f.key] || '')} onChange={(v) => update(i, f.key, v)} />
@@ -101,7 +130,13 @@ function ListEditor({
           ))}
         </div>
       ))}
-    </div>
+      <button
+        onClick={onCreate}
+        className="w-full py-2.5 rounded-xl border border-dashed border-[hsl(220,10%,22%)] text-[12px] font-medium text-[hsl(220,10%,45%)] hover:border-[hsl(var(--gold)/0.5)] hover:text-[hsl(var(--gold))] transition-all flex items-center justify-center gap-1.5"
+      >
+        <Plus size={13} /> Добавить
+      </button>
+    </CollapsibleGroup>
   );
 }
 
@@ -116,8 +151,10 @@ export function SectionEditorPanel({ section, onChange }: Props) {
         <div className="space-y-4">
           <Field label="Заголовок" value={data.title} onChange={(v) => set('title', v)} multiline />
           <Field label="Подзаголовок" value={data.subtitle} onChange={(v) => set('subtitle', v)} multiline />
-          <Field label="App Store URL" value={data.app_store_url} onChange={(v) => set('app_store_url', v)} />
-          <Field label="Google Play URL" value={data.google_play_url} onChange={(v) => set('google_play_url', v)} />
+          <CollapsibleGroup title="Ссылки на магазины" defaultOpen={false}>
+            <Field label="App Store URL" value={data.app_store_url} onChange={(v) => set('app_store_url', v)} />
+            <Field label="Google Play URL" value={data.google_play_url} onChange={(v) => set('google_play_url', v)} />
+          </CollapsibleGroup>
         </div>
       );
     }
@@ -157,7 +194,7 @@ export function SectionEditorPanel({ section, onChange }: Props) {
     case 'partners': {
       const data = d as unknown as PartnersData;
       return (
-        <div className="space-y-6">
+        <div className="space-y-4">
           <Field label="Заголовок" value={data.title} onChange={(v) => onChange({ ...data, title: v } as PartnersData)} />
           <ListEditor
             items={data.advantages as unknown as Record<string, string>[]}
@@ -182,7 +219,7 @@ export function SectionEditorPanel({ section, onChange }: Props) {
       const data = d as unknown as TrustData;
       const partnerLogos = (data as TrustData).partner_logos || [];
       return (
-        <div className="space-y-6">
+        <div className="space-y-4">
           <Field label="Заголовок" value={data.title} onChange={(v) => onChange({ ...data, title: v } as TrustData)} />
           <ListEditor
             items={data.metrics as unknown as Record<string, string>[]}
@@ -220,7 +257,7 @@ export function SectionEditorPanel({ section, onChange }: Props) {
     case 'faq': {
       const data = d as unknown as FaqData;
       return (
-        <div className="space-y-6">
+        <div className="space-y-4">
           <Field label="Заголовок" value={data.title} onChange={(v) => onChange({ ...data, title: v } as FaqData)} />
           <ListEditor
             items={data.user_items as unknown as Record<string, string>[]}
@@ -246,8 +283,10 @@ export function SectionEditorPanel({ section, onChange }: Props) {
         <div className="space-y-4">
           <Field label="Заголовок" value={data.title} onChange={(v) => onChange({ ...data, title: v } as CtaData)} />
           <Field label="Подзаголовок" value={data.subtitle} onChange={(v) => onChange({ ...data, subtitle: v } as CtaData)} />
-          <Field label="App Store URL" value={data.app_store_url} onChange={(v) => onChange({ ...data, app_store_url: v } as CtaData)} />
-          <Field label="Google Play URL" value={data.google_play_url} onChange={(v) => onChange({ ...data, google_play_url: v } as CtaData)} />
+          <CollapsibleGroup title="Ссылки на магазины" defaultOpen={false}>
+            <Field label="App Store URL" value={data.app_store_url} onChange={(v) => onChange({ ...data, app_store_url: v } as CtaData)} />
+            <Field label="Google Play URL" value={data.google_play_url} onChange={(v) => onChange({ ...data, google_play_url: v } as CtaData)} />
+          </CollapsibleGroup>
         </div>
       );
     }
@@ -271,6 +310,6 @@ export function SectionEditorPanel({ section, onChange }: Props) {
     }
 
     default:
-      return <p className="text-sm text-muted-foreground">Неизвестный тип секции</p>;
+      return <p className="text-sm text-[hsl(220,10%,45%)]">Неизвестный тип секции</p>;
   }
 }

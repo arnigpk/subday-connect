@@ -4,7 +4,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { AdminLayout } from '@/components/admin/AdminLayout';
 import { AdminGuard } from '@/components/admin/AdminGuard';
 import { LeadRecord } from '@/lib/types';
-import { Search, Download, X, Loader2, MessageSquare } from 'lucide-react';
+import { Search, Download, X, Loader2, MessageSquare, Calendar, MapPin, Phone, Building2 } from 'lucide-react';
 import { toast } from 'sonner';
 
 const STATUSES = ['new', 'in_progress', 'done', 'spam'] as const;
@@ -12,8 +12,10 @@ const STATUS_LABELS: Record<string, string> = {
   new: 'Новая', in_progress: 'В работе', done: 'Завершена', spam: 'Спам'
 };
 const STATUS_COLORS: Record<string, string> = {
-  new: 'bg-blue-100 text-blue-700', in_progress: 'bg-yellow-100 text-yellow-700',
-  done: 'bg-green-100 text-green-700', spam: 'bg-red-100 text-red-700'
+  new: 'bg-blue-500/15 text-blue-400 border-blue-500/20',
+  in_progress: 'bg-amber-500/15 text-amber-400 border-amber-500/20',
+  done: 'bg-emerald-500/15 text-emerald-400 border-emerald-500/20',
+  spam: 'bg-red-500/15 text-red-400 border-red-500/20'
 };
 
 function LeadsContent() {
@@ -76,56 +78,82 @@ function LeadsContent() {
     setSelectedLead({ ...selectedLead, note: noteText });
   };
 
+  const statusCounts = STATUSES.reduce((acc, s) => {
+    acc[s] = leads.filter((l) => l.status === s).length;
+    return acc;
+  }, {} as Record<string, number>);
+
   return (
-    <div>
+    <div className="p-4 lg:p-6">
+      {/* Header */}
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mb-6">
-        <h2 className="text-xl font-bold">Заявки партнёров</h2>
-        <button onClick={exportCsv} className="btn-outline text-xs py-1.5 px-3 gap-1">
-          <Download size={13} /> CSV
+        <div>
+          <h2 className="text-lg font-bold text-white">Заявки партнёров</h2>
+          <p className="text-[12px] text-[hsl(220,10%,45%)]">{leads.length} заявок всего</p>
+        </div>
+        <button onClick={exportCsv} className="flex items-center gap-2 px-4 py-2 rounded-xl text-[12px] font-medium bg-[hsl(220,10%,14%)] border border-[hsl(220,10%,20%)] text-[hsl(220,10%,65%)] hover:text-white hover:border-[hsl(220,10%,30%)] transition-all">
+          <Download size={14} /> Экспорт CSV
         </button>
       </div>
 
-      {/* Filters */}
-      <div className="flex flex-col sm:flex-row gap-3 mb-4">
-        <div className="relative flex-1">
-          <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
-          <input value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Поиск..." className="input-field pl-9 text-sm" />
-        </div>
-        <select value={statusFilter} onChange={(e) => setStatusFilter(e.target.value)} className="input-field text-sm w-auto">
-          <option value="">Все статусы</option>
-          {STATUSES.map((s) => <option key={s} value={s}>{STATUS_LABELS[s]}</option>)}
-        </select>
+      {/* Status counters */}
+      <div className="grid grid-cols-4 gap-3 mb-5">
+        {STATUSES.map((s) => (
+          <button
+            key={s}
+            onClick={() => setStatusFilter(statusFilter === s ? '' : s)}
+            className={`p-3 rounded-xl border text-center transition-all ${
+              statusFilter === s
+                ? STATUS_COLORS[s]
+                : 'bg-[hsl(220,10%,11%)] border-[hsl(220,10%,18%)] text-[hsl(220,10%,55%)] hover:border-[hsl(220,10%,25%)]'
+            }`}
+          >
+            <div className="text-lg font-bold">{statusCounts[s]}</div>
+            <div className="text-[10px] font-medium uppercase tracking-wider">{STATUS_LABELS[s]}</div>
+          </button>
+        ))}
+      </div>
+
+      {/* Search */}
+      <div className="relative mb-4">
+        <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-[hsl(220,10%,35%)]" />
+        <input
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          placeholder="Поиск по имени, городу, телефону..."
+          className="admin-input pl-10"
+        />
       </div>
 
       {/* Table */}
       {isLoading ? (
-        <div className="text-center py-12 text-muted-foreground"><Loader2 className="animate-spin mx-auto" /></div>
+        <div className="text-center py-12"><Loader2 className="animate-spin mx-auto text-[hsl(220,10%,30%)]" /></div>
       ) : (
-        <div className="bg-background rounded-xl border border-border overflow-x-auto">
-          <table className="w-full text-sm">
+        <div className="bg-[hsl(220,10%,11%)] rounded-xl border border-[hsl(220,10%,18%)] overflow-x-auto">
+          <table className="w-full text-[13px]">
             <thead>
-              <tr className="border-b border-border">
-                <th className="text-left p-3 font-medium text-muted-foreground">Дата</th>
-                <th className="text-left p-3 font-medium text-muted-foreground">Имя</th>
-                <th className="text-left p-3 font-medium text-muted-foreground hidden md:table-cell">Город</th>
-                <th className="text-left p-3 font-medium text-muted-foreground hidden md:table-cell">Телефон</th>
-                <th className="text-left p-3 font-medium text-muted-foreground hidden lg:table-cell">Заведение</th>
-                <th className="text-left p-3 font-medium text-muted-foreground">Статус</th>
+              <tr className="border-b border-[hsl(220,10%,16%)]">
+                <th className="text-left p-3 font-semibold text-[hsl(220,10%,45%)] text-[11px] uppercase tracking-wider">Дата</th>
+                <th className="text-left p-3 font-semibold text-[hsl(220,10%,45%)] text-[11px] uppercase tracking-wider">Имя</th>
+                <th className="text-left p-3 font-semibold text-[hsl(220,10%,45%)] text-[11px] uppercase tracking-wider hidden md:table-cell">Город</th>
+                <th className="text-left p-3 font-semibold text-[hsl(220,10%,45%)] text-[11px] uppercase tracking-wider hidden md:table-cell">Телефон</th>
+                <th className="text-left p-3 font-semibold text-[hsl(220,10%,45%)] text-[11px] uppercase tracking-wider hidden lg:table-cell">Заведение</th>
+                <th className="text-left p-3 font-semibold text-[hsl(220,10%,45%)] text-[11px] uppercase tracking-wider">Статус</th>
               </tr>
             </thead>
             <tbody>
               {filtered.map((lead) => (
-                <tr key={lead.id} className="border-b border-border/50 hover:bg-accent/30 cursor-pointer transition-colors" onClick={() => { setSelectedLead(lead); setNoteText(lead.note || ''); }}>
-                  <td className="p-3 text-muted-foreground">{new Date(lead.created_at).toLocaleDateString('ru')}</td>
-                  <td className="p-3 font-medium">{lead.name}</td>
-                  <td className="p-3 hidden md:table-cell">{lead.city}</td>
-                  <td className="p-3 hidden md:table-cell">{lead.phone}</td>
-                  <td className="p-3 hidden lg:table-cell">{lead.venue}</td>
+                <tr key={lead.id} className="border-b border-[hsl(220,10%,14%)] hover:bg-[hsl(220,10%,13%)] cursor-pointer transition-colors" onClick={() => { setSelectedLead(lead); setNoteText(lead.note || ''); }}>
+                  <td className="p-3 text-[hsl(220,10%,45%)]">{new Date(lead.created_at).toLocaleDateString('ru')}</td>
+                  <td className="p-3 font-medium text-white">{lead.name}</td>
+                  <td className="p-3 hidden md:table-cell text-[hsl(220,10%,60%)]">{lead.city}</td>
+                  <td className="p-3 hidden md:table-cell text-[hsl(220,10%,60%)]">{lead.phone}</td>
+                  <td className="p-3 hidden lg:table-cell text-[hsl(220,10%,60%)]">{lead.venue}</td>
                   <td className="p-3">
                     <select
                       value={lead.status}
                       onChange={(e) => { e.stopPropagation(); updateMutation.mutate({ id: lead.id, updates: { status: e.target.value } }); }}
-                      className={`text-xs font-medium px-2 py-1 rounded-lg border-0 ${STATUS_COLORS[lead.status] || ''}`}
+                      className={`text-[11px] font-semibold px-2.5 py-1 rounded-lg border ${STATUS_COLORS[lead.status] || ''} bg-transparent cursor-pointer`}
                     >
                       {STATUSES.map((s) => <option key={s} value={s}>{STATUS_LABELS[s]}</option>)}
                     </select>
@@ -133,7 +161,7 @@ function LeadsContent() {
                 </tr>
               ))}
               {filtered.length === 0 && (
-                <tr><td colSpan={6} className="p-8 text-center text-muted-foreground">Заявок нет</td></tr>
+                <tr><td colSpan={6} className="p-12 text-center text-[hsl(220,10%,35%)]">Заявок нет</td></tr>
               )}
             </tbody>
           </table>
@@ -142,27 +170,29 @@ function LeadsContent() {
 
       {/* Lead detail modal */}
       {selectedLead && (
-        <div className="modal-overlay" onClick={() => setSelectedLead(null)}>
-          <div className="modal-content max-w-md" onClick={(e) => e.stopPropagation()}>
-            <div className="flex items-center justify-between mb-4">
-              <h3 className="font-bold">Заявка</h3>
-              <button onClick={() => setSelectedLead(null)} className="p-1 hover:bg-accent rounded-lg"><X size={18} /></button>
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm" onClick={() => setSelectedLead(null)}>
+          <div className="bg-[hsl(220,13%,12%)] border border-[hsl(220,10%,20%)] rounded-2xl p-6 w-full max-w-md shadow-2xl" onClick={(e) => e.stopPropagation()}>
+            <div className="flex items-center justify-between mb-5">
+              <h3 className="font-bold text-white">Детали заявки</h3>
+              <button onClick={() => setSelectedLead(null)} className="p-1.5 rounded-lg hover:bg-[hsl(220,10%,18%)] text-[hsl(220,10%,50%)] transition-colors"><X size={18} /></button>
             </div>
-            <div className="space-y-3 text-sm mb-6">
-              <div><span className="text-muted-foreground">Дата:</span> <span className="font-medium">{new Date(selectedLead.created_at).toLocaleString('ru')}</span></div>
-              <div><span className="text-muted-foreground">Имя:</span> <span className="font-medium">{selectedLead.name}</span></div>
-              <div><span className="text-muted-foreground">Город:</span> <span className="font-medium">{selectedLead.city}</span></div>
-              <div><span className="text-muted-foreground">Телефон:</span> <span className="font-medium">{selectedLead.phone}</span></div>
-              <div><span className="text-muted-foreground">Заведение:</span> <span className="font-medium">{selectedLead.venue}</span></div>
-              {selectedLead.comment && <div><span className="text-muted-foreground">Комментарий:</span> <span className="font-medium">{selectedLead.comment}</span></div>}
+            <div className="space-y-3 text-[13px] mb-6">
+              <div className="flex items-center gap-2"><Calendar size={14} className="text-[hsl(220,10%,40%)]" /><span className="text-[hsl(220,10%,50%)]">Дата:</span> <span className="font-medium text-white">{new Date(selectedLead.created_at).toLocaleString('ru')}</span></div>
+              <div className="flex items-center gap-2"><Building2 size={14} className="text-[hsl(220,10%,40%)]" /><span className="text-[hsl(220,10%,50%)]">Имя:</span> <span className="font-medium text-white">{selectedLead.name}</span></div>
+              <div className="flex items-center gap-2"><MapPin size={14} className="text-[hsl(220,10%,40%)]" /><span className="text-[hsl(220,10%,50%)]">Город:</span> <span className="font-medium text-white">{selectedLead.city}</span></div>
+              <div className="flex items-center gap-2"><Phone size={14} className="text-[hsl(220,10%,40%)]" /><span className="text-[hsl(220,10%,50%)]">Телефон:</span> <span className="font-medium text-white">{selectedLead.phone}</span></div>
+              <div className="flex items-center gap-2"><Building2 size={14} className="text-[hsl(220,10%,40%)]" /><span className="text-[hsl(220,10%,50%)]">Заведение:</span> <span className="font-medium text-white">{selectedLead.venue}</span></div>
+              {selectedLead.comment && <div className="pt-2 border-t border-[hsl(220,10%,18%)]"><span className="text-[hsl(220,10%,50%)]">Комментарий:</span> <span className="text-white">{selectedLead.comment}</span></div>}
             </div>
 
             <div className="space-y-2">
-              <div className="flex items-center gap-2 text-xs font-semibold text-muted-foreground uppercase">
+              <div className="flex items-center gap-2 text-[11px] font-semibold text-[hsl(220,10%,45%)] uppercase tracking-wider">
                 <MessageSquare size={12} /> Заметка
               </div>
-              <textarea value={noteText} onChange={(e) => setNoteText(e.target.value)} className="input-field text-sm resize-none" rows={3} placeholder="Внутренняя заметка..." />
-              <button onClick={saveNote} className="btn-dark text-xs py-1.5 px-3 w-full justify-center">Сохранить заметку</button>
+              <textarea value={noteText} onChange={(e) => setNoteText(e.target.value)} className="admin-input resize-none" rows={3} placeholder="Внутренняя заметка..." />
+              <button onClick={saveNote} className="w-full py-2.5 rounded-xl text-[13px] font-semibold bg-[hsl(var(--gold))] text-white hover:bg-[hsl(var(--gold-dark))] transition-all">
+                Сохранить заметку
+              </button>
             </div>
           </div>
         </div>
