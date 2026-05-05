@@ -8,36 +8,48 @@ const plans = [
     name: 'subday Go',
     emoji: '✅',
     description: 'Попробуй и будь в числе первых!',
-    badge: 'Try & Go',
-    badgeColor: 'bg-emerald-500 text-white',
+    badge: 'GO',
+    badgeColor: 'bg-sky-500 text-white',
     coffees: '15 кофе на 15 дней',
-    price: '14 990',
+    price: '14 850',
     period: '/ 15 дней',
-    saving: '7 500',
+    perDrink: '990',
     popular: false,
   },
   {
     name: 'subday Daily',
     emoji: '🔥',
     description: 'Капучино или Латте каждый день',
-    badge: 'Хит',
+    badge: 'EVERYDAY',
     badgeColor: 'bg-orange-500 text-white',
     coffees: '30 кофе на 30 дней',
-    price: '29 990',
+    price: '29 700',
     period: '/ месяц',
-    saving: '15 000',
+    perDrink: '990',
     popular: true,
   },
   {
     name: 'subday Plus',
     emoji: '🚀',
     description: 'Для тех, кто хочет попробовать всё',
-    badge: 'Max',
-    badgeColor: 'bg-teal-600 text-white',
+    badge: 'PLUS',
+    badgeColor: 'bg-emerald-600 text-white',
     coffees: '30 кофе на 30 дней',
-    price: '44 990',
+    price: '44 700',
     period: '/ месяц',
-    saving: '9 000',
+    perDrink: '1 490',
+    popular: false,
+  },
+  {
+    name: 'subday Max',
+    emoji: '👑',
+    description: 'Для тех кто любит быть на высоте!',
+    badge: 'MAX',
+    badgeColor: 'bg-emerald-500 text-white',
+    coffees: '45 кофе на 30 дней',
+    price: '66 600',
+    period: '/ месяц',
+    perDrink: '1 480',
     popular: false,
   },
 ];
@@ -92,10 +104,10 @@ export function PricingSection() {
             {lang === 'ru' ? 'Тарифы' : 'Тарифтер'}
           </motion.h2>
 
-          <div className="flex items-center gap-12 max-w-6xl mx-auto">
+          <div className="flex items-center gap-12 max-w-7xl mx-auto">
             {/* Pricing cards */}
             <motion.div
-              className="grid grid-cols-3 gap-5 flex-1"
+              className="grid grid-cols-2 gap-5 flex-1"
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true, amount: 0.2 }}
@@ -133,7 +145,7 @@ export function PricingSection() {
                   </div>
 
                   <p className="font-semibold text-sm" style={{ color: 'hsl(var(--gold-dark))' }}>
-                    Выгода {plan.saving} ₸
+                    {plan.perDrink} ₸ за напиток
                   </p>
                 </motion.div>
               ))}
