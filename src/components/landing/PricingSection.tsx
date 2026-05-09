@@ -8,48 +8,40 @@ const plans = [
     name: 'subday Go',
     emoji: '✅',
     description: 'Попробуй и будь в числе первых!',
-    badge: 'GO',
-    badgeColor: 'bg-sky-500 text-white',
     coffees: '15 кофе на 15 дней',
-    price: '14 850',
+    price: '16 500',
     period: '/ 15 дней',
-    perDrink: '990',
+    perDrink: '1 100',
     popular: false,
   },
   {
     name: 'subday Daily',
     emoji: '🔥',
     description: 'Капучино или Латте каждый день',
-    badge: 'EVERYDAY',
-    badgeColor: 'bg-orange-500 text-white',
     coffees: '30 кофе на 30 дней',
-    price: '29 700',
+    price: '32 700',
     period: '/ месяц',
-    perDrink: '990',
+    perDrink: '1 090',
     popular: true,
   },
   {
     name: 'subday Plus',
     emoji: '🚀',
     description: 'Для тех, кто хочет попробовать всё',
-    badge: 'PLUS',
-    badgeColor: 'bg-emerald-600 text-white',
     coffees: '30 кофе на 30 дней',
-    price: '44 700',
+    price: '47 700',
     period: '/ месяц',
-    perDrink: '1 490',
+    perDrink: '1 590',
     popular: false,
   },
   {
     name: 'subday Max',
     emoji: '👑',
     description: 'Для тех кто любит быть на высоте!',
-    badge: 'MAX',
-    badgeColor: 'bg-emerald-500 text-white',
     coffees: '45 кофе на 30 дней',
-    price: '66 600',
+    price: '67 050',
     period: '/ месяц',
-    perDrink: '1 480',
+    perDrink: '1 490',
     popular: false,
   },
 ];
@@ -123,16 +115,11 @@ export function PricingSection() {
                   transition={{ duration: 0.5 }}
                   whileHover={{ y: -6, transition: { duration: 0.2 } }}
                 >
-                  <div className="flex items-start justify-between mb-3">
-                    <div>
-                      <h3 className="font-bold text-lg">
-                        {plan.name} <span>{plan.emoji}</span>
-                      </h3>
-                      <p className="text-muted-foreground text-sm mt-0.5">{plan.description}</p>
-                    </div>
-                    <span className={`text-xs font-semibold px-2.5 py-1 rounded-full whitespace-nowrap ${plan.badgeColor}`}>
-                      {plan.badge}
-                    </span>
+                  <div className="mb-3">
+                    <h3 className="font-bold text-lg">
+                      {plan.name} <span>{plan.emoji}</span>
+                    </h3>
+                    <p className="text-muted-foreground text-sm mt-0.5">{plan.description}</p>
                   </div>
 
                   <div className="inline-flex items-center gap-1.5 bg-[hsl(var(--gold-light))] text-[hsl(var(--gold-dark))] text-sm font-semibold px-3 py-1 rounded-full w-fit mb-4">
