@@ -58,7 +58,7 @@ export function CoffeeBeansBackground() {
         speed: isLogo ? 0.2 + Math.random() * 0.5 : 0.3 + Math.random() * 0.7,
         rotation: isLogo ? 0 : Math.random() * Math.PI * 2,
         rotationSpeed: isLogo ? 0 : (Math.random() - 0.5) * 0.02,
-        opacity: isLogo ? 0.04 + Math.random() * 0.03 : 0.02 + Math.random() * 0.02,
+        opacity: isLogo ? 0.09 + Math.random() * 0.05 : 0.05 + Math.random() * 0.04,
         type,
       };
     };
