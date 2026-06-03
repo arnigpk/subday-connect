@@ -71,8 +71,12 @@ export function PartnersSection({ data, onPartnerClick }: Props) {
               animate={{ y: [0, -12, 0] }}
               transition={{ duration: 4, ease: 'easeInOut', repeat: Infinity }}
             >
-              <div className="relative mx-auto w-[280px]">
-                <img src={partnerCabinetMockup} alt="Кабинет партнёра subday" className="w-full h-auto object-contain block relative z-10" />
+              <div className="relative mx-auto w-[260px]">
+                <div className="rounded-[2.5rem] border-[6px] border-foreground/90 bg-foreground/90 p-1.5 shadow-2xl">
+                  <div className="overflow-hidden rounded-[2rem] bg-background">
+                    <img src={partnerCabinetMockup} alt="Кабинет партнёра subday" className="w-full h-auto object-contain block" />
+                  </div>
+                </div>
                 <div className="absolute -inset-4 -z-10 rounded-[3rem] opacity-30 blur-2xl gold-gradient" />
               </div>
             </motion.div>
@@ -120,8 +124,12 @@ export function PartnersSection({ data, onPartnerClick }: Props) {
               animate={{ y: [0, -12, 0] }}
               transition={{ duration: 4, ease: 'easeInOut', repeat: Infinity }}
             >
-              <div className="relative mx-auto w-[280px] md:w-[340px]">
-                <img src={partnerCabinetMockup} alt="Кабинет партнёра subday" className="w-full h-auto object-contain block relative z-10" />
+              <div className="relative mx-auto w-[260px] md:w-[300px]">
+                <div className="rounded-[2.5rem] border-[6px] border-foreground/90 bg-foreground/90 p-1.5 shadow-2xl">
+                  <div className="overflow-hidden rounded-[2rem] bg-background">
+                    <img src={partnerCabinetMockup} alt="Кабинет партнёра subday" className="w-full h-auto object-contain block" />
+                  </div>
+                </div>
                 <div className="absolute -inset-4 -z-10 rounded-[3rem] opacity-30 blur-2xl gold-gradient" />
               </div>
             </motion.div>
