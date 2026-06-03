@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { scaleIn } from '@/lib/animations';
-import appMockup from '@/assets/app-mockup.png';
+import appMockupAsset from '@/assets/app-mockup.png.asset.json';
+const appMockup = appMockupAsset.url;
 
 export function AppMockup() {
   return (
