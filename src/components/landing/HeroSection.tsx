@@ -5,7 +5,6 @@ import { fadeUp, scaleIn, staggerContainer } from '@/lib/animations';
 import { useIsMobile } from '@/hooks/use-mobile';
 import appStoreLogo from '@/assets/app-store.png';
 import googlePlayLogo from '@/assets/google-play.png';
-import appMockup from '@/assets/app-mockup.png';
 import heroMobile from '@/assets/hero-mobile.png';
 import heroDesktop from '@/assets/hero-desktop.png';
 
