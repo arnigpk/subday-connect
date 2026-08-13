@@ -11,6 +11,7 @@ import AdminEditor from "./pages/AdminEditor";
 import AdminLeads from "./pages/AdminLeads";
 import AdminMedia from "./pages/AdminMedia";
 import AdminSettings from "./pages/AdminSettings";
+import OAuthConsent from "./pages/OAuthConsent";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -30,6 +31,7 @@ const App = () => (
               <Route path="/admin/leads" element={<AdminLeads />} />
               <Route path="/admin/media" element={<AdminMedia />} />
               <Route path="/admin/settings" element={<AdminSettings />} />
+              <Route path="/.lovable/oauth/consent" element={<OAuthConsent />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </BrowserRouter>
