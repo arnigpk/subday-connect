@@ -1,7 +1,13 @@
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
 import { Loader2 } from 'lucide-react';
+
+function safeNext(value: string | null): string | null {
+  if (!value) return null;
+  if (!value.startsWith('/') || value.startsWith('//')) return null;
+  return value;
+}
 
 export default function AdminLogin() {
   const [email, setEmail] = useState('');
@@ -10,10 +16,16 @@ export default function AdminLogin() {
   const [loading, setLoading] = useState(false);
   const [checking, setChecking] = useState(true);
   const navigate = useNavigate();
+  const [params] = useSearchParams();
+  const next = safeNext(params.get('next'));
 
   useEffect(() => {
     supabase.auth.getSession().then(async ({ data: { session } }) => {
       if (session?.user) {
+        if (next) {
+          window.location.href = next;
+          return;
+        }
         const { data: roles } = await supabase
           .from('user_roles')
           .select('role')
@@ -25,7 +37,7 @@ export default function AdminLogin() {
       }
       setChecking(false);
     });
-  }, [navigate]);
+  }, [navigate, next]);
 
   if (checking) return null;
 
@@ -45,6 +57,11 @@ export default function AdminLogin() {
     if (!data.user) {
       setError('Authentication failed');
       setLoading(false);
+      return;
+    }
+
+    if (next) {
+      window.location.href = next;
       return;
     }
 
