@@ -1,8 +1,7 @@
 import { motion } from 'framer-motion';
 import { fadeUp, scaleIn, staggerContainer } from '@/lib/animations';
 import { useLanguage } from '@/contexts/LanguageContext';
-import appMockupAsset from '@/assets/app-mockup.png.asset.json';
-const appMockup = appMockupAsset.url;
+import appMockup from '@/assets/app-mockup.png';
 
 const plans = [
   {

@@ -3,4 +3,4 @@ Allow: /
 Disallow: /admin
 Disallow: /admin/
 
-Sitemap: https://subday-connect.lovable.app/sitemap.xml
+Sitemap: https://subday.app/sitemap.xml

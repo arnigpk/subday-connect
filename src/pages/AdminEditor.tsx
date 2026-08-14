@@ -115,7 +115,7 @@ function SeoEditor({ content, onChange }: { content: SiteContent; onChange: (met
         <p className="text-[10px] font-semibold uppercase tracking-wider text-[hsl(220,10%,40%)] mb-3">Превью в Google</p>
         <div className="space-y-1">
           <p className="text-[14px] text-blue-400 truncate">{meta.title || 'Заголовок страницы'}</p>
-          <p className="text-[11px] text-green-400/80">subday-connect.lovable.app</p>
+          <p className="text-[11px] text-green-400/80">subday.app</p>
           <p className="text-[12px] text-[hsl(220,10%,55%)] line-clamp-2">{meta.description || 'Описание страницы...'}</p>
         </div>
       </div>

@@ -3,8 +3,7 @@ import { useLanguage } from '@/contexts/LanguageContext';
 import { TrendingUp, DollarSign, Users, BarChart3 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { fadeUp, scaleIn, staggerContainer } from '@/lib/animations';
-import partnerCabinetAsset from '@/assets/partner-cabinet-mockup.png.asset.json';
-const partnerCabinetMockup = partnerCabinetAsset.url;
+import partnerCabinetMockup from '@/assets/partner-cabinet-mockup.png';
 
 const advantageIcons = [TrendingUp, DollarSign, Users, BarChart3];
 
