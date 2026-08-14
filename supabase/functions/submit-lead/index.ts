@@ -7,6 +7,10 @@ const corsHeaders = {
 };
 
 Deno.serve(async (req) => {
+  // На самохостовом сервере ключи приходят заголовком x-worker-env — в Deno.env
+  // их нет. Разбираем один раз в начале, дальше используем как запасной источник.
+  let workerEnv: Record<string, string> = {};
+  try { workerEnv = JSON.parse(req.headers.get("x-worker-env") || "{}"); } catch { /* ignore */ }
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
   }
@@ -30,8 +34,11 @@ Deno.serve(async (req) => {
     }
 
     const supabase = createClient(
-      Deno.env.get("SUPABASE_URL")!,
-      Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!
+      Deno.env.get("SUPABASE_URL") || workerEnv["SUPABASE_URL"]!,
+      Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") || workerEnv["SUPABASE_SERVICE_ROLE_KEY"]!,
+      // Таблицы сайта живут в отдельной схеме: в общей public их имена
+      // столкнулись бы с приложением.
+      { db: { schema: "landing" } }
     );
 
     // Insert lead
