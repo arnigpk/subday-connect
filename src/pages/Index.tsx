@@ -80,7 +80,9 @@ export default function Index() {
 
   useEffect(() => {
     if (!isLoading) {
-      const timer = setTimeout(() => setShowPreloader(false), 1800);
+      // Держим прелоадер ровно столько, сколько заливается его полоска загрузки
+      // (см. Preloader). Дольше — это уже пустое ожидание на готовой странице.
+      const timer = setTimeout(() => setShowPreloader(false), 900);
       return () => clearTimeout(timer);
     }
   }, [isLoading]);

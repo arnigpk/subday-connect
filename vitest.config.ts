@@ -7,8 +7,11 @@ export default defineConfig({
   test: {
     environment: "jsdom",
     globals: true,
-    setupFiles: ["./src/test/setup.ts"],
+    // Путь абсолютный: над проектом лежит чужой каталог со своим конфигом,
+    // и относительный путь разрешался от него, а не от нашего корня.
+    setupFiles: [path.resolve(__dirname, "./src/test/setup.ts")],
     include: ["src/**/*.{test,spec}.{ts,tsx}"],
+    root: __dirname,
   },
   resolve: {
     alias: { "@": path.resolve(__dirname, "./src") },

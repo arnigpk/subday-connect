@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { AdminLayout } from '@/components/admin/AdminLayout';
 import { AdminGuard } from '@/components/admin/AdminGuard';
+import { PasswordCard } from '@/components/admin/PasswordCard';
 import { Save, Send, Loader2, HelpCircle, Bot } from 'lucide-react';
 import { toast } from 'sonner';
 
@@ -110,12 +111,20 @@ function SettingsContent() {
           </div>
         </div>
 
-        <label className="flex items-center gap-3 cursor-pointer">
+        {/* Переключатель нарисован вручную, поэтому состояние переключает кнопка:
+            раньше это был просто раскрашенный div, и значение изменить было нельзя. */}
+        <button
+          type="button"
+          role="switch"
+          aria-checked={settings.telegram_enabled}
+          onClick={() => setSettings((prev) => ({ ...prev, telegram_enabled: !prev.telegram_enabled }))}
+          className="flex items-center gap-3 cursor-pointer"
+        >
           <div className={`w-10 h-6 rounded-full transition-all relative ${settings.telegram_enabled ? 'bg-[hsl(var(--gold))]' : 'bg-[hsl(220,10%,20%)]'}`}>
             <div className={`absolute top-0.5 w-5 h-5 rounded-full bg-white shadow transition-transform ${settings.telegram_enabled ? 'translate-x-[18px]' : 'translate-x-0.5'}`} />
           </div>
           <span className="text-[13px] text-[hsl(220,10%,70%)]">Включить уведомления</span>
-        </label>
+        </button>
 
         <div className="space-y-1.5">
           <label className="text-[11px] font-semibold uppercase tracking-wider text-[hsl(220,10%,45%)]">Bot Token</label>
@@ -176,6 +185,8 @@ function SettingsContent() {
           </button>
         </div>
       </div>
+
+      <PasswordCard />
     </div>
   );
 }

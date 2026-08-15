@@ -55,7 +55,7 @@ export function Preloader({ show }: Props) {
         <motion.div
           className="fixed inset-0 z-[9999] flex items-center justify-center bg-background"
           exit={{ opacity: 0 }}
-          transition={{ duration: 0.5, ease: 'easeOut' }}
+          transition={{ duration: 0.3, ease: 'easeOut' }}
         >
           <div className="relative flex flex-col items-center">
             {/* Floating coffee beans */}
@@ -70,7 +70,7 @@ export function Preloader({ show }: Props) {
               className="h-16 relative z-10"
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: [0.8, 1.05, 1] }}
-              transition={{ duration: 0.8, ease: 'easeOut' }}
+              transition={{ duration: 0.45, ease: 'easeOut' }}
             />
 
             {/* Loading bar */}
@@ -78,13 +78,13 @@ export function Preloader({ show }: Props) {
               className="mt-8 h-0.5 rounded-full bg-primary/20 w-32 overflow-hidden"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ delay: 0.3 }}
+              transition={{ delay: 0.15 }}
             >
               <motion.div
                 className="h-full bg-primary rounded-full"
                 initial={{ width: '0%' }}
                 animate={{ width: '100%' }}
-                transition={{ duration: 1.5, ease: 'easeInOut' }}
+                transition={{ duration: 0.85, ease: 'easeInOut' }}
               />
             </motion.div>
           </div>
